@@ -1,0 +1,324 @@
+/* Account — Figma node 1:51, redesigned per a 5-point design critique (see
+   commit message): one card on the whole screen (access/billing), everything
+   else (quota, profile) is plain text on the page background. One shared
+   label/value/caption pattern reused everywhere instead of one-off styles
+   per section — a strict 3-size type scale: page h1 32px, prominent values
+   24px, everything else (labels, captions, links, body copy) 13px. */
+
+.account__row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account__row--end {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.account__label {
+  margin: 0;
+  color: var(--ink-dim);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 17px; /* ≈1.3, whole px so the quota bar lands on the grid */
+  letter-spacing: 0.01em;
+}
+
+.account__value {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 29px; /* ≈1.2 */
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.account__value em {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink-dim);
+  letter-spacing: 0;
+}
+
+.account__caption {
+  margin: 0;
+  color: var(--ink-dim);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  /* Not the body-copy 1.5: a single-line caption stacked right under another
+     line (card title, warning line, plan line) doesn't need paragraph
+     leading — that padding was eating into the 8px gap the flex `gap`
+     between them was supposed to be, so two lines 8px apart still read as
+     loosely spaced. Wraps rarely enough here that 1.3 stays readable when
+     it does. Whole px (≈1.3) keeps stacked cards on the pixel grid. */
+  line-height: 17px;
+}
+
+.account__caption--warning {
+  color: #ffb84d;
+}
+
+.account__email {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  /* Whole px: the inherited 19.5px mono line box, baseline-aligned next to
+     the Manrope label, grew the profile line to 21.5px and put the access
+     card below it on a half pixel. */
+  line-height: 19px;
+  letter-spacing: 0.01em;
+  word-break: break-all;
+}
+
+.account__profile-line {
+  margin: 20px 0 0;
+}
+
+/* No quota block above it (expired/cancelled — see AccountView.tsx's showQuota
+   condition): profile is the first thing under the page title, so it needs
+   the title's own breathing room instead of the tighter "next item in a
+   stack" gap. */
+.page__head + .account__profile-line {
+  margin-top: 32px;
+}
+
+/* The access card's own heading — the accessStatus text alone (no "Доступ"
+   eyebrow above it; the card's position already says what it's about). One
+   step up from the 13px label tier, short of the 24px numeric-value tier —
+   this is the one place that in-between size earns its keep. */
+.account__card-title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px; /* ≈1.3 */
+  letter-spacing: -0.01em;
+}
+
+/* Plain-text quota block — no card chrome; separated from the profile row
+   and the access card below it by page-level vertical rhythm alone. */
+.account__quota {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.account__quota-cols {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.account__quota-track {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.account__quota-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, var(--ink) 100%);
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left;
+  transition: transform 500ms var(--ease);
+}
+
+/* The one card on the screen — reuses the shared page__card--figma chrome
+   so it still reads as "PLG's card", just scoped to this one section now
+   instead of wrapping the whole page. */
+.account__access-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 22px clamp(24px, 4vw, 32px);
+}
+
+/* No divider: the status line above and the plan/action below it are one
+   thought (what's happening → what to do about it), not two card sections —
+   a rule between them just reads as dead air. Spacing alone carries the
+   rhythm — no margin-top here either: the parent's flex `gap` already
+   spaces every child in the card equally, a margin on top of that just
+   double-counts and opens a bigger gap above this one child than above
+   the others. */
+.account__purchase {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* When the paid offer carries its own "Полный доступ" heading (soft upsell —
+   the state line above is "Пробный доступ" etc.), give it a little more room
+   above so state and offer read as two blocks; the 8px flex gap keeps the
+   heading tight to its own plan line, matching the state line + its caption. */
+.account__purchase > .account__card-title:first-child {
+  margin-top: 6px;
+}
+
+/* The one action on the page that should dominate — full width, not a
+   compact chip competing for attention with "Выйти" below it. */
+.account__cta {
+  appearance: none;
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px;
+  border: 0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #090909;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: opacity var(--t) var(--ease);
+}
+
+.account__cta:hover {
+  opacity: 0.88;
+}
+
+.account__cta:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Launch promo — regular price struck through before the 299 ₽ one. */
+.account__cta-was {
+  margin-right: 5px;
+  color: rgba(9, 9, 9, 0.45);
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+
+.account__checkout-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Secondary/destructive actions — plain text links, deliberately the
+   quietest thing on the screen so they never compete with the CTA. */
+.account__secondary-links {
+  display: flex;
+  gap: 20px;
+  margin-top: 18px;
+}
+
+.account__text-link {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-dim);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.account__text-link:hover {
+  color: var(--ink);
+}
+
+.account__text-link--danger {
+  color: rgba(255, 107, 107, 0.75);
+}
+
+.account__text-link--danger:hover {
+  color: rgba(255, 107, 107, 0.95);
+}
+
+.account__empty {
+  margin: 22px 0 0;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-body);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Deliberately dev-only: it is compiled out of the packaged app. */
+.account__preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 24px;
+  padding: 12px 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  color: var(--ink-dim);
+}
+
+.account__preview > span {
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.account__preview > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.account__preview button {
+  appearance: none;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ink-dim);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account__preview button.is-active {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
+}
+
+.account__preview p {
+  flex: 1 1 230px;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.account__version {
+  margin: 24px 0 0;
+  padding-top: 12px;
+  text-align: right;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--text-3);
+  opacity: 0.6;
+}

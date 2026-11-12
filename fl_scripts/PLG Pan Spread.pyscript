@@ -1,0 +1,80 @@
+"""PLG Pan Spread — spread notes across the stereo field (built for hats).
+
+Great on hi-hats and percussion to widen a beat. Pan in FL piano roll is
+0..1 with 0.5 centred.
+
+Hat tip: enable "Keep accents centred" so the loud/main hats stay up the middle
+while the quiet ghost hats fan out — that's how pro hats sit wide without the
+groove drifting off to one side.
+"""
+
+from __future__ import annotations
+
+import random
+
+import flpianoroll as flp
+
+MODES = ["Alternate L/R", "Ramp L>R", "Ramp R>L", "Random"]
+
+
+def createDialog():
+    form = flp.ScriptDialog(
+        "PLG Pan Spread",
+        "Spread selected notes across the stereo field. Width 0 = centred.",
+    )
+    form.addInputCombo("Mode", MODES, 0)
+    form.addInputKnob("Width", 0.8, 0.0, 1.0)
+    form.addInputCheckbox("Keep accents centred", True)
+    form.addInputKnob("Accent threshold", 0.7, 0.0, 1.0)
+    form.addInputCheckbox("Only selected notes", True)
+    return form
+
+
+def _resolve_combo(value, options):
+    return options[value] if isinstance(value, int) else value
+
+
+def _target_indices(only_selected):
+    indices = []
+    for i in range(flp.score.noteCount):
+        note = flp.score.getNote(i)
+        if (not only_selected) or note.selected:
+            indices.append(i)
+    return indices
+
+
+def apply(form):
+    mode = _resolve_combo(form.getInputValue("Mode"), MODES)
+    width = float(form.getInputValue("Width"))
+    keep_accents = bool(form.getInputValue("Keep accents centred"))
+    accent_threshold = float(form.getInputValue("Accent threshold"))
+    only_selected = bool(form.getInputValue("Only selected notes"))
+
+    targets = _target_indices(only_selected)
+    if not targets:
+        flp.Utils.ShowMessage("PLG Pan Spread: select some notes first.")
+        return
+
+    half = 0.5 * width
+    # only the spreadable (non-accent) notes drive the L>R ramp position
+    spread = [i for i in targets if not (keep_accents and flp.score.getNote(i).velocity >= accent_threshold)]
+    total = len(spread)
+
+    order = 0
+    for i in targets:
+        note = flp.score.getNote(i)
+        if keep_accents and note.velocity >= accent_threshold:
+            note.pan = 0.5
+            continue
+        if mode == "Alternate L/R":
+            pan = 0.5 - half if order % 2 == 0 else 0.5 + half
+        elif mode == "Ramp L>R":
+            t = order / (total - 1) if total > 1 else 0.5
+            pan = (0.5 - half) + width * t
+        elif mode == "Ramp R>L":
+            t = order / (total - 1) if total > 1 else 0.5
+            pan = (0.5 + half) - width * t
+        else:  # Random
+            pan = 0.5 + (random.random() * 2.0 - 1.0) * half
+        note.pan = max(0.0, min(1.0, pan))
+        order += 1

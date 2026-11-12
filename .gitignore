@@ -1,0 +1,158 @@
+# Secrets
+.env
+.env.local
+cloud/.env
+cloud/.env.staging
+cloud/.env.umami
+
+# Local-only / large (sample packs, agent tooling, scratch renders)
+.claude/
+PLG_Sounds/
+PLG_Sounds_FL/
+PLG_MIDI/
+PLG_Archive/
+preview.wav
+
+# Personal MIDI/audio and archived run results are local working material.
+assets/starter/**/*.wav
+assets/starter/**/*.mp3
+assets/starter/**/*.flac
+assets/starter/**/*.aif
+assets/starter/**/*.aiff
+archive/generated-artifacts-*/
+archive/debug-artifacts-*/
+
+# Verification/control generation runs (FLP + pattern.json dumps produced
+# while working on a change) — outputs, never source. Same category as the
+# archive/*-artifacts-*/ dirs above.
+CONTROL_*/
+# The FLP/pattern.json dumps are output; the batch harness that produced them
+# is source, so .py inside these folders stays tracked.
+PLG_Beats_*/*
+!PLG_Beats_*/*.py
+
+# Same category, ad hoc naming: one-off verify/smoke/compare runs dumped at
+# the repo root while working on the engine (e.g. PLG_RC_Smoke/,
+# PLG_SeedV2_Compare/, PLG_OptionC_Verify/), plus loose generated sessions
+# next to the already-ignored PLG_Session.flp.
+/PLG_*_Verify/
+/PLG_*_Smoke/
+/PLG_*_Compare/
+/PLG_*.flp
+
+# pytest scratch trees that used to accumulate in the source root
+.pytest_tmp_*/
+
+# Python
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.pyo
+.Python
+.venv/
+venv/
+.venv-bp/
+
+# Generated outputs
+output_pattern.json
+sample_catalog.json
+build_guide.txt
+READ_ME_IMBA.txt
+user_profile.json
+output_midi/
+output_chops/
+output_preview.wav
+output_stems/
+PLG_Session.flp
+beat_quota.json
+
+# PyInstaller
+build/
+dist/
+
+# Logs
+*.log
+
+# Per-user quota (subscription period)
+beat_quota.json
+plg_cloud_session.json
+plg_device.json
+
+# User library (audio + midi + presets + projects + plugins)
+PLG_Library/
+PLG_Library/**/*.wav
+PLG_Library/**/*.mp3
+PLG_Library/**/*.ogg
+PLG_Library/**/*.flac
+PLG_Library/**/*.aif
+PLG_Library/**/*.aiff
+PLG_Library/**/*.mid
+PLG_Library/**/*.midi
+PLG_Library/**/*.flp
+PLG_Library/**/*.fst
+PLG_Library/**/*.fxp
+PLG_Library/**/*.dll
+PLG_Library/**/*.vst3
+PLG_Sounds/**/*.wav
+PLG_Sounds/**/*.mp3
+PLG_Sounds/**/*.ogg
+PLG_Sounds/**/*.flac
+PLG_Sounds/**/*.aif
+PLG_Sounds/**/*.aiff
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local tooling / scratch artifacts (screenshots, playwright traces, agent configs)
+*.png
+!landing/favicon.png
+!assets/studio-hardware.png
+.playwright-mcp/
+.codex/
+.codex*/
+.claude/
+.agents/
+artifacts/
+logs/
+output*/
+*_dump*.txt
+*_part*.txt
+repomix-*.xml
+*.kit.json
+*.metrics.json
+.agents/skills/impeccable/
+output/
+
+# Update signing private key — NEVER commit
+plg_update_private.key
+*.key
+build_flavor.json
+
+# Public-showcase hygiene: user audio/MIDI/projects stay local (assets/melody_oneshots and
+# assets/hat_patterns.json are deliberately NOT listed here - their rights decision is pending)
+PLG_MIDI/
+PLG_Sounds/
+/Projects/
+/check_*/
+/listen_*/
+/snare/
+/promo video/
+/PLG_Beats_NoChannels/
+/Projects/**/*.wav
+/Projects/**/*.mid
+/Projects/**/*.flp
+PLG_Sounds/**/*.mid
+PLG_Sounds/**/*.flp
+PLG_MIDI/**/*.mid
+PLG_MIDI/**/*.midi
+# README screenshots are the one tracked image folder
+!docs/img/
+!docs/img/*.png
+*.tsbuildinfo
+
+# generated on first run, not source
+assets/plg_template.flp
+assets/plg_template.meta

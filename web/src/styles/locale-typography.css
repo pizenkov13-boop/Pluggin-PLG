@@ -1,0 +1,330 @@
+/* Locale-aware typography — fonts, sizes, case. Set on <html lang="…"> by I18nProvider. */
+
+html {
+  /* Syne (Latin/digits) → Unbounded (Cyrillic, per-glyph fallback). */
+  --font-heading: "Syne", "Unbounded", "Segoe UI", sans-serif;
+  --font-ui: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  /* was 28px — Playboi Carti's collection h1 is 24px/700, the single
+     largest text on the page; unified across locales below. See
+     shop.playboicarti.com.md. */
+  --typo-page-size: 24px;
+  --typo-page-weight: 800;
+  --typo-page-transform: uppercase;
+  --typo-page-tracking: 0.02em;
+
+  --typo-section-size: 14px;
+  --typo-section-weight: 600;
+  --typo-section-transform: none;
+  --typo-section-tracking: 0;
+
+  --typo-label-size: 11px;
+  --typo-label-weight: 800;
+  --typo-label-transform: uppercase;
+  --typo-label-tracking: 0.1em;
+
+  --typo-nav-size: 13px;
+  --typo-nav-weight: 700;
+  --typo-nav-transform: none;
+  --typo-nav-tracking: 0.02em;
+
+  --typo-btn-size: 12px;
+  --typo-btn-weight: 800;
+  --typo-btn-transform: uppercase;
+  --typo-btn-tracking: 0.06em;
+
+  --typo-body-size: 14px;
+  --typo-caption-size: 12px;
+  --typo-line-height: 1.5;
+}
+
+/* Latin — tight display headings, small caps on labels only */
+html[lang="en"],
+html[lang="es"],
+html[lang="pt"],
+html[lang="fr"],
+html[lang="de"] {
+  --typo-page-transform: uppercase;
+  --typo-page-tracking: 0.03em;
+  --typo-label-transform: uppercase;
+  --typo-label-tracking: 0.1em;
+  --typo-btn-transform: uppercase;
+  --typo-btn-tracking: 0.07em;
+}
+
+html[lang="de"] .sidebar__item,
+html[lang="fr"] .sidebar__item {
+  --typo-nav-size: 12px;
+}
+
+/* Cyrillic — natural case, slightly larger UI copy */
+html[lang="ru"] {
+  /* Russian headings use the requested Inter ExtraBold rather than a
+     per-glyph display fallback. The same display token owns the Home hero. */
+  --font-heading: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Inter", "Segoe UI", system-ui, sans-serif;
+  /* Matches the Russian footer copy on the public PLG site. */
+  --font-ui: "Manrope PLG", "Segoe UI", sans-serif;
+  --font-body: "Manrope PLG", "Segoe UI", sans-serif;
+  /* --font-hero (card titles, dialog headings, several buttons — 10+ call
+     sites) was the one display token nobody localized. Fjalla One has no
+     Cyrillic, so every one of those silently fell through to Unbounded then
+     system Segoe UI — a different, heavier face than the Manrope body copy
+     right next to it. Home's hero panel is the deliberate exception, carved
+     back out below. */
+  --font-hero: "Manrope PLG", "Segoe UI", sans-serif;
+  /* was 26px — unified to Playboi Carti's 24px h1 across every locale. */
+  --typo-page-size: 24px;
+  --typo-page-weight: 800;
+  --typo-page-transform: none;
+  --typo-page-tracking: -0.01em;
+  --typo-section-size: 15px;
+  --typo-label-transform: none;
+  --typo-label-tracking: 0.02em;
+  --typo-label-size: 12px;
+  --typo-nav-tracking: 0.01em;
+  --typo-btn-transform: none;
+  --typo-btn-tracking: 0.02em;
+  --typo-btn-size: 13px;
+  --typo-body-size: 14px;
+  --typo-caption-size: 13px;
+}
+
+/* Home is deliberately a compact English brand surface in every locale —
+   its copy is never translated (no home.hero* keys in ru.ts), but --font-hero
+   above is now localized for every OTHER Cyrillic use site, so without this
+   exception Home's Latin text would still silently pick up Manrope PLG. */
+html[lang="ru"] .hero__title {
+  font-family: "Syne", "Unbounded", "Segoe UI", sans-serif;
+}
+
+html[lang="ru"] .hero__panel-text {
+  font-family: "Fjalla One", "Syne", "Unbounded", "Segoe UI", sans-serif;
+}
+
+/* .lang__current only ever holds a 2-letter language code ("RU"/"EN") — pure
+   Latin regardless of locale, never Cyrillic — so it never needed --font-ui's
+   localization; keep it on the original Fjalla One (see the Hero-Face
+   Exception note in LangSwitcher.css). */
+html[lang="ru"] .lang__current {
+  font-family: "Fjalla One", "Syne", "Unbounded", "Segoe UI", sans-serif;
+}
+
+/* These hero-card titles hardcode font-weight: 400 (PageView.css,
+   AccountView.css) — tuned for Fjalla One, which reads bold even at its
+   regular cut. Now that --font-hero routes Cyrillic to Manrope PLG instead,
+   that same 400 renders thin next to Fjalla's weight. Bold it back up for ru
+   only; Latin locales keep the original Fjalla 400 look. */
+html[lang="ru"] .page--figma-help .page__card-title,
+html[lang="ru"] .account__cloud > .page__card-title,
+html[lang="ru"] .account__plan > .page__card-title,
+html[lang="ru"] .legal__open-btn {
+  font-weight: 700;
+}
+
+/* Chinese */
+html[lang="zh"] {
+  --font-heading: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-ui: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --typo-page-size: 24px;
+  --typo-page-weight: 700;
+  --typo-page-transform: none;
+  --typo-page-tracking: 0;
+  --typo-section-size: 15px;
+  --typo-section-weight: 600;
+  --typo-label-transform: none;
+  --typo-label-tracking: 0;
+  --typo-label-size: 12px;
+  --typo-label-weight: 600;
+  --typo-nav-size: 14px;
+  --typo-nav-weight: 600;
+  --typo-btn-transform: none;
+  --typo-btn-tracking: 0.04em;
+  --typo-btn-size: 14px;
+  --typo-body-size: 14px;
+  --typo-line-height: 1.65;
+}
+
+/* Japanese */
+html[lang="ja"] {
+  --font-heading: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-ui: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --typo-page-size: 24px;
+  --typo-page-weight: 700;
+  --typo-page-transform: none;
+  --typo-page-tracking: 0;
+  --typo-section-size: 15px;
+  --typo-label-transform: none;
+  --typo-label-size: 12px;
+  --typo-label-weight: 600;
+  --typo-nav-size: 14px;
+  --typo-nav-weight: 600;
+  --typo-btn-transform: none;
+  --typo-btn-tracking: 0.04em;
+  --typo-btn-size: 14px;
+  --typo-line-height: 1.65;
+}
+
+/* Arabic */
+html[lang="ar"] {
+  --font-heading: "Noto Sans Arabic", "Segoe UI", sans-serif;
+  --font-ui: "Noto Sans Arabic", "Segoe UI", sans-serif;
+  /* was 26px — unified to Playboi Carti's 24px h1. */
+  --typo-page-size: 24px;
+  --typo-page-weight: 700;
+  --typo-page-transform: none;
+  --typo-page-tracking: 0;
+  --typo-section-size: 15px;
+  --typo-label-transform: none;
+  --typo-label-size: 12px;
+  --typo-label-weight: 600;
+  --typo-nav-size: 14px;
+  --typo-nav-weight: 600;
+  --typo-btn-transform: none;
+  --typo-btn-tracking: 0;
+  --typo-btn-size: 14px;
+  --typo-line-height: 1.7;
+}
+
+/* Apply tokens to shared UI surfaces */
+body {
+  font-family: var(--font-ui);
+  font-size: var(--typo-body-size);
+  line-height: var(--typo-line-height);
+}
+
+.page__head h1,
+.settings__head h1,
+.auth__card h1 {
+  font-family: var(--font-heading);
+  font-size: var(--typo-page-size);
+  font-weight: var(--typo-page-weight);
+  letter-spacing: var(--typo-page-tracking);
+  text-transform: var(--typo-page-transform);
+}
+
+.page__head p,
+.settings__head p,
+.auth__card p {
+  font-size: var(--typo-caption-size);
+  line-height: var(--typo-line-height);
+}
+
+.page__card-title,
+.settings__card > .page__card-title,
+.account__plan h3 {
+  font-family: var(--font-ui);
+  font-size: var(--typo-section-size);
+  font-weight: var(--typo-section-weight);
+  letter-spacing: var(--typo-section-tracking);
+  text-transform: var(--typo-section-transform);
+}
+
+.page__card-desc,
+.account__plan-desc,
+.account__legal-desc {
+  font-size: var(--typo-caption-size);
+  line-height: var(--typo-line-height);
+}
+
+.sidebar__item {
+  font-family: var(--font-ui);
+  font-size: var(--typo-nav-size);
+  font-weight: var(--typo-nav-weight);
+  letter-spacing: var(--typo-nav-tracking);
+  text-transform: var(--typo-nav-transform);
+}
+
+.sidebar__item span {
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.account__quota-head h2,
+.account__legal-title {
+  font-family: var(--font-ui);
+  font-size: var(--typo-label-size);
+  font-weight: var(--typo-label-weight);
+  letter-spacing: var(--typo-label-tracking);
+  text-transform: var(--typo-label-transform);
+}
+
+.lang__name {
+  font-family: var(--font-ui);
+  font-size: var(--typo-caption-size);
+}
+
+.page__btn,
+.settings__save,
+.auth__btn {
+  font-family: var(--font-heading);
+  font-size: var(--typo-btn-size);
+  font-weight: var(--typo-btn-weight);
+  letter-spacing: var(--typo-btn-tracking);
+  text-transform: var(--typo-btn-transform);
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
+  min-height: 40px;
+  height: auto;
+  padding-block: 10px;
+}
+
+.cta {
+  font-family: var(--font-heading);
+  font-size: var(--typo-btn-size);
+  font-weight: var(--typo-btn-weight);
+  letter-spacing: var(--typo-btn-tracking);
+  text-transform: var(--typo-btn-transform);
+  white-space: normal;
+  line-height: 1.25;
+  min-height: 52px;
+  height: auto;
+  padding-block: 14px;
+}
+
+.typo-label {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--typo-label-size);
+  font-weight: var(--typo-label-weight);
+  letter-spacing: var(--typo-label-tracking);
+  text-transform: var(--typo-label-transform);
+  color: var(--ink);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+html[lang="zh"] .ideas__chip,
+html[lang="ja"] .ideas__chip,
+html[lang="ar"] .ideas__chip {
+  font-family: var(--font-ui);
+}
+
+html[lang="ru"] .ideas__label {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 12px;
+}
+
+/* Figma's condensed English CTA face has no Cyrillic. Russian actions use
+   the same Manrope UI voice as the site, which keeps their labels readable
+   and inside the fixed Home-style capsules. */
+html[lang="ru"] .page__hero-btn {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html[lang="ru"] .page--figma-tools .page__hero-btn {
+  width: auto;
+  min-width: 236px;
+  padding-inline: 20px;
+}
+
+html[lang="ru"] .page--figma-library .page__hero-btn {
+  width: 200px;
+  min-width: 200px;
+}

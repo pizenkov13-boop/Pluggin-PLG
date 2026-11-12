@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "description": "Reproducibility contract for the generated audio that PLG.spec packages into PLG.exe. Every file below is produced by first-party synthesis from tracked source -- no sample packs, no external presets. Regenerate and verify with tools/build_starter_assets.py.",
+  "generated_by": "tools/build_starter_assets.py",
+  "count": 23,
+  "files": {
+    "PLG_starter_808.wav": {
+      "generator": "starter_kit._synth_808",
+      "sha256": "a77166b3f5fdc285017f1ffa11f84e7f8145e1a8dd5f0efc9c62f71877aafa64"
+    },
+    "PLG_starter_808_bass.wav": {
+      "generator": "starter_kit._synth_808_bass",
+      "sha256": "a4d7bd4e83f0a0de2a9fcf566883b615cb73154a53ae5df23908834e3ca4f97f"
+    },
+    "PLG_starter_clap.wav": {
+      "generator": "starter_kit._synth_clap",
+      "sha256": "432962deb14dc40307807fe05ae8a88840e646188ac8b41d0a3c41e0bca081bf"
+    },
+    "PLG_starter_hat.wav": {
+      "generator": "starter_kit._synth_hat",
+      "sha256": "24926dd093dcc20407f415042d744f4d6c77099835b12a6c61afbe7ddda55c29"
+    },
+    "PLG_starter_kick.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[kick_boom_808.wav] (copied via starter_kit.pick_bundled_for_track)",
+      "sha256": "4d12cacf46b6f00373c5605de7e942f20971f4b93643a8a4c76ee12cde16abd5"
+    },
+    "PLG_starter_melody.wav": {
+      "generator": "starter_kit._synth_melody_pluck",
+      "sha256": "3f986c0c4d213df2ea758641bcf8a78f28b3e0c685df623c259025935fea89cc"
+    },
+    "PLG_starter_snare.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[snare_rim_layer.wav] (copied via starter_kit.pick_bundled_for_track)",
+      "sha256": "53b90144b064e943bd2d712d65b4a0908328e6ced83dc7aa32ef9491c8ddf230"
+    },
+    "bundled_sounds/808_glide_stab.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[808_glide_stab.wav]",
+      "sha256": "b6c0748e3800e370a998153117eae88ee6def5c351339de118b8545a0bdb78d8"
+    },
+    "bundled_sounds/808_opium_heavy.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[808_opium_heavy.wav]",
+      "sha256": "8cf7b8065a59c89bc26404cad6b79c8154696055acabb912b0056be44aed959b"
+    },
+    "bundled_sounds/808_phonk_sub.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[808_phonk_sub.wav]",
+      "sha256": "c3c5c0ee87fb75839f21c2924fe83887b2982a8cc22e6956ecf2ff756e6802a5"
+    },
+    "bundled_sounds/808_rage_distort.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[808_rage_distort.wav]",
+      "sha256": "3c06be47ef3b231b30dde99890506c8a02704525b3e4e67fce3970d38470a8ba"
+    },
+    "bundled_sounds/808_starboy_clean.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[808_starboy_clean.wav]",
+      "sha256": "30329c224cc2d47b3eae601d9fc1c7f5132cf268ffcd53f8be3eee8bae031f3a"
+    },
+    "bundled_sounds/clap_stack.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[clap_stack.wav]",
+      "sha256": "432962deb14dc40307807fe05ae8a88840e646188ac8b41d0a3c41e0bca081bf"
+    },
+    "bundled_sounds/hat_open_roll.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[hat_open_roll.wav]",
+      "sha256": "5ce40915518159d15a1a47e1f80d961fb0dd58597859f5a57144b97f9af57776"
+    },
+    "bundled_sounds/hat_opium_airy.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[hat_opium_airy.wav]",
+      "sha256": "65ba46cd6536c61c382ffdd10c50a031f9022410e21f2328e6b7421779416942"
+    },
+    "bundled_sounds/hat_tight_machine.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[hat_tight_machine.wav]",
+      "sha256": "1ad524f3bd25f9813328898eb8a4605e5d4bfcf692fb9543508e2bb2ba5680c4"
+    },
+    "bundled_sounds/kick_boom_808.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[kick_boom_808.wav]",
+      "sha256": "4d12cacf46b6f00373c5605de7e942f20971f4b93643a8a4c76ee12cde16abd5"
+    },
+    "bundled_sounds/kick_opium_click.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[kick_opium_click.wav]",
+      "sha256": "578b0620edb50d1fa0c9d09314b3dc16a1a4393f654e6061c371c623d4249fd4"
+    },
+    "bundled_sounds/kick_punch_trap.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[kick_punch_trap.wav]",
+      "sha256": "6d75d9217075e67905207f337af9e64e6e53c9c35f9723f3d35c3d2c53dfb558"
+    },
+    "bundled_sounds/melody_bell_hook.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[melody_bell_hook.wav]",
+      "sha256": "b2a44ddf365078c2514d9f8106fed2b91a5d34b96bf516deacbfee508eacb22a"
+    },
+    "bundled_sounds/melody_dark_pluck.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[melody_dark_pluck.wav]",
+      "sha256": "8e1587ec9837c0d7c88126170f8ee43d35759549c17eb757d5508d7395021649"
+    },
+    "bundled_sounds/snare_rim_layer.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[snare_rim_layer.wav]",
+      "sha256": "53b90144b064e943bd2d712d65b4a0908328e6ced83dc7aa32ef9491c8ddf230"
+    },
+    "bundled_sounds/snare_trap_crack.wav": {
+      "generator": "build_bundled_sounds.BUNDLED_SPECS[snare_trap_crack.wav]",
+      "sha256": "f850d2aa5d5ba372229ebfe71745e617e7eea8141b99442148c37b5822db84d5"
+    }
+  }
+}

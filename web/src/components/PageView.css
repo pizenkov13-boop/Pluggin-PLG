@@ -1,0 +1,1006 @@
+.page {
+  max-width: 720px;
+}
+
+.page--loading {
+  color: var(--text-3);
+  padding: 24px 0;
+}
+
+/* Tertiary/informational text that doesn't deserve a bordered card — a
+   plain quiet block, not another identical card in the stack (see
+   /impeccable bolder: break the "same card everywhere" pattern). */
+.page__note {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-sm-plus);
+  border-top: 1px solid var(--line);
+}
+
+.page__note-title {
+  margin: 0 0 var(--space-xs);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-dim);
+}
+
+.page__note p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+/* The title block is the page's one major section — was --space-xl (48px);
+   Rick Owens and Balenciaga both independently cite 100px as their largest
+   observed spacing value, so this now spends the app's own already-defined
+   (previously unused) --space-3xl token on exactly the gap it was named
+   for. See rickowens.eu.md, balenciaga.com.md. */
+.page__head {
+  margin-bottom: var(--space-3xl);
+}
+
+/* Glanceable state, not a task — a slim strip instead of a full bordered
+   card, so it doesn't compete with the page's actual primary-action card
+   (see /impeccable bolder). */
+.page__status-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm-plus);
+  border-bottom: 1px solid var(--line);
+}
+
+.page__status-strip-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.page__status-strip-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-dim);
+}
+
+/* font-family/size/weight/letter-spacing/case come from locale-typography.css
+   (.page__head h1 is one of its targeted selectors) — redefining them here
+   silently overrode the locale-aware scale for every non-Latin locale.
+   Only set what that rule doesn't own. */
+.page__head h1 {
+  margin: 0;
+  color: var(--ink);
+}
+
+.page__head p {
+  margin: 10px 0 0;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+/* Dark-theme card: outline-forward — the border defines it, the fill is a
+   whisper (a fill barely lifts off a near-black page). */
+.page__card {
+  margin-top: var(--space-sm-plus);
+  padding: var(--space-md-plus);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.012);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-plus);
+}
+
+.page__head + .page__card {
+  margin-top: 0;
+}
+
+/* The one primary-task card per screen (Library's folder scan, Tools'
+   session actions) — bigger radius and more generous padding, reusing the
+   already-documented card-hero role instead of inventing a new one (see
+   /impeccable bolder). Everything else on the screen stays the quieter
+   standard .page__card. */
+.page__card--hero {
+  border-radius: var(--radius-lg);
+  border-color: rgba(255, 255, 255, 0.2);
+  padding: var(--space-gutter);
+}
+
+/* Hero-scale typography for Figma-sourced subpages (Library 1:37, Help 1:73,
+   Tools 1:61, Settings 1:88, Account 1:51 — Syne ExtraBold 40 + Fjalla 25).
+   Opt in via .page--figma. */
+.page--figma .page__head h1 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Shared vertical rhythm: title → 48 → subtitle → 6 → capsule. */
+.page--figma .page__head {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.page--figma .page__head p {
+  margin: var(--figma-title-gap) 0 0;
+  color: #ffffff;
+  font-family: var(--font-hero);
+  font-size: var(--figma-btn-font);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Capsule chrome — thick ring, 50r, 181818. First capsule sits 6px under subtitle. */
+.page__card--figma {
+  border: var(--figma-card-border) solid var(--figma-card-stroke);
+  border-radius: var(--figma-card-radius);
+  background: var(--figma-card-fill);
+  box-shadow: none;
+  margin-top: var(--figma-subtitle-gap);
+}
+
+.page--figma .page__head + .page__card,
+.page--figma .page__head + .page__card--figma,
+.page--figma .page__head + [class*="page__card--figma"] {
+  margin-top: var(--figma-subtitle-gap);
+}
+
+/* Library's composition uses the same low, centred scale as the reference —
+   not a full-width dashboard panel. */
+.page--figma-library {
+  max-width: 780px;
+  position: relative;
+  left: -10px;
+}
+
+.page--figma-library .page__head h1 {
+  font-size: 32px;
+}
+
+.page--figma-library .page__head p {
+  margin-top: 34px;
+  font-size: 20px;
+}
+
+.page__card--figma-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  padding: var(--space-lg) var(--space-2xl);
+}
+
+.page__card--figma-library {
+  min-height: 150px;
+  height: 150px;
+  gap: 156px;
+  padding: 0 72px;
+  margin-top: var(--figma-subtitle-gap);
+  box-sizing: border-box;
+}
+
+.page--figma-library .page__hero-btn {
+  width: 170px;
+  min-width: 170px;
+  height: 44px;
+  font-size: 21px;
+}
+
+@media (max-width: 1100px) {
+  .page__card--figma-library {
+    gap: clamp(48px, 14vw, 156px);
+    padding: 0 clamp(24px, 6vw, 72px);
+  }
+}
+
+@media (max-width: 520px) {
+  .page__card--figma-row,
+  .page__card--figma-library {
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    min-height: 0;
+    height: auto;
+  }
+}
+
+/* Tools node 1:61 — must beat .page { max-width: 720px }. Capsule is the
+   full 1050-wide strip; button is a fixed 200×50 chip in the middle. */
+.page.page--figma-tools {
+  max-width: 1050px;
+  width: 100%;
+}
+
+.page--figma-tools .page__head h1,
+.page--figma-tools .page__head p {
+  position: relative;
+  left: -10px;
+}
+
+.page--figma-tools .page__card--figma-tools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  margin-top: var(--figma-subtitle-gap);
+  padding: 0;
+  box-sizing: border-box;
+  border: var(--figma-card-border) solid var(--figma-card-stroke);
+  border-radius: var(--figma-card-radius);
+  background: var(--figma-card-fill);
+  position: relative;
+  left: -4px;
+}
+
+.page--figma-tools .page__hero-btn {
+  width: var(--figma-btn-w);
+  min-width: var(--figma-btn-w);
+  height: var(--figma-btn-h);
+  padding: 0 6px;
+  font-size: var(--figma-btn-font);
+  position: relative;
+  left: -9px;
+}
+
+@media (max-width: 1100px) {
+  .page.page--figma-tools {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .page--figma-tools .page__card--figma-tools {
+    height: auto;
+    min-height: 100px;
+    padding: var(--space-md);
+  }
+
+  .page--figma-tools .page__hero-btn {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 18px;
+  }
+}
+
+/* Help node 1:73 — five stacked capsules W800, stack gap from the rhythm. */
+/* width: 100% like Settings/Tools — without it the column shrank to the
+   subtitle's text width (795.72px), leaving every capsule on a half pixel. */
+.page--figma-help {
+  max-width: 800px;
+  width: 100%;
+}
+
+.page--figma-help .page__card--figma-help {
+  margin-top: var(--figma-stack-gap);
+  padding: var(--figma-card-pad) var(--figma-card-pad-x);
+  min-height: 0;
+}
+
+.page--figma-help .page__head + .page__card--figma-help {
+  margin-top: var(--figma-subtitle-gap);
+}
+
+.page--figma-help .page__card-title {
+  color: #ffffff;
+  font-family: var(--font-hero);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.page--figma-help .page__card-desc,
+.page--figma-help .page__faq-q,
+.page--figma-help .page__faq-a,
+.page--figma-help .page__list-item span,
+.page--figma-help .page__path {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-body);
+}
+
+/* 13px × the 1.5 caption token = 19.5px; one-line descriptions left the
+   capsules below them at .5px offsets. */
+.page--figma-help .page__card-desc {
+  line-height: 20px;
+}
+
+.page--figma-help .page__list-item strong,
+.page--figma-help .page__faq-q span {
+  color: #ffffff;
+}
+
+.page--figma-help .page__stat {
+  background: #090909;
+  border-color: var(--figma-card-stroke);
+}
+
+/* Settings node 1:88 — FL path capsule. Natural height; shared rhythm. */
+.page.page--figma-settings {
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  left: -5px;
+}
+
+.page--figma-settings .page__card--figma-settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--space-md);
+  width: 100%;
+  margin-top: var(--figma-subtitle-gap);
+  padding: var(--figma-card-pad) var(--figma-card-pad-x);
+  box-sizing: border-box;
+  border: var(--figma-card-border) solid var(--figma-card-stroke);
+  border-radius: var(--figma-card-radius);
+  background: var(--figma-card-fill);
+}
+
+.page--figma-settings .page__row--figma-settings {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: 0;
+}
+
+/* Reads as a continuation of the FL-path card above it, not a separate
+   island — overrides the generic centered/spaced .page--figma .page__error
+   (PageView.css) for Settings specifically. Same icon + light-red-fill
+   pattern already used for hero__error/auth__error. */
+.page.page--figma-settings .page__error {
+  margin-top: -10px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: start;
+  /* Same treatment as .auth__error / .hero__error: weight 500, whole-px even
+     42px box (was 43.5px from a 19.5px line). */
+  padding: 10px 14px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+  background: var(--signal-soft);
+  border-color: var(--signal-soft);
+  color: var(--error);
+}
+
+.page.page--figma-settings .page__error svg {
+  flex: 0 0 auto;
+}
+
+.page--figma-settings .page__hero-btn--settings {
+  width: var(--figma-btn-w);
+  min-width: var(--figma-btn-w);
+  height: var(--figma-btn-h);
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--figma-btn-font);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.settings__path {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--figma-field-h);
+}
+
+.settings__path-input {
+  width: 100%;
+  height: var(--figma-field-h);
+  /* Right pad = inset + icon + inset so text never hits the glyph */
+  padding: 0 calc(var(--figma-field-inset) + var(--figma-icon) + var(--figma-field-inset)) 0
+    var(--figma-field-inset);
+  border: 1px solid var(--figma-card-stroke);
+  border-radius: 999px;
+  background: #090909;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: var(--figma-field-h);
+  outline: none;
+  cursor: pointer;
+  caret-color: transparent;
+}
+
+.settings__path-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Intentionally no distinct :focus ring here — typing a bad path leaves the
+   field focused, and a highlighted border next to the red "not found" line
+   read as if focus itself signalled the error. The field now looks identical
+   focused or not, matching the untouched auto-detected "found" state. */
+
+.settings__path-browse {
+  appearance: none;
+  position: absolute;
+  /* Icon box flush to the same inset as the text on the left */
+  right: var(--figma-field-inset);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--figma-icon);
+  height: var(--figma-icon);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 0;
+  cursor: pointer;
+  transition: color var(--t) var(--ease);
+}
+
+/* Expand hit target without shifting the glyph (matches L/R inset). */
+.settings__path-browse::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+}
+
+.settings__path-browse svg {
+  display: block;
+  width: var(--figma-icon);
+  height: var(--figma-icon);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.settings__path-browse:hover,
+.settings__path-browse:focus-visible {
+  color: #ffffff;
+  outline: none;
+}
+
+.settings__status {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 18px; /* 1.4 → 18.2px pushed the Save button to y=.19 */
+  text-align: center;
+}
+
+.settings__status--ok {
+  color: #6fdf8a;
+}
+
+.settings__status--bad {
+  color: #ff6b6b;
+}
+
+@media (max-width: 560px) {
+  .page--figma-settings .page__card--figma-settings {
+    padding: var(--space-lg);
+  }
+}
+
+/* Account node 1:51 — quota capsule. Hug content; shared pad rhythm. */
+.page--figma-account {
+  max-width: 600px;
+  width: 100%;
+}
+
+.page--figma-account .page__head h1 {
+  font-size: 32px;
+}
+
+@media (max-height: 760px) {
+  .shell__content:not(.shell__content--focus) {
+    padding-block: var(--space-md);
+  }
+
+  .page--figma-account .page__head p {
+    margin-top: 24px;
+  }
+}
+
+.page__card--figma-account {
+  min-height: 0;
+  height: auto;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0;
+  padding: 26px clamp(32px, 5vw, 48px) 28px;
+  margin-top: 0;
+  border-radius: clamp(34px, 2vw, 42px);
+}
+
+.account__empty {
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .page__card--figma-account {
+    padding: var(--space-lg);
+  }
+}
+
+/* Shared CTA chip — 200×50, Fjalla 25, 10r, text dead-center. */
+.page__hero-btn {
+  appearance: none;
+  flex: 0 0 auto;
+  width: var(--figma-btn-w);
+  height: var(--figma-btn-h);
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--figma-btn-radius);
+  /* Depth lives on the button, not the glyphs: a blurred dark text-shadow on
+     dark text smeared every letter. A hard 2px bottom edge is pixel-exact. */
+  --hero-btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.22), inset 0 -2px 0 rgba(0, 0, 0, 0.16);
+  background: #ffffff;
+  color: #090909;
+  font-family: var(--font-hero);
+  font-size: var(--figma-btn-font);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: var(--hero-btn-shadow);
+  transition: background var(--t) var(--ease), box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+}
+
+.page__hero-btn:hover:not(:disabled) {
+  background: #e8e8e8;
+  box-shadow: var(--hero-btn-shadow);
+}
+
+.page__hero-btn:active:not(:disabled) {
+  background: #dcdcdc;
+  box-shadow: var(--hero-btn-shadow);
+}
+
+.page__hero-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.page__card-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.page__card-desc {
+  margin: -6px 0 0;
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.page--figma .page__card-desc {
+  margin: 0;
+}
+
+.page__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.page__stat-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.page__stat-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page__stat-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Dense auto-fill grid — for a variable-length breakdown (e.g. sample
+   library categories) where a fixed column count would waste space or
+   overflow. Bare tiles, no extra chrome per item (Playboi Carti density —
+   see DESIGN.md). */
+/* Gap was 8px — Playboi Carti's grid gutter is 32px vertical / 24px
+   horizontal; adopting the horizontal value gives these bare tiles the same
+   breathing room instead of a cramped auto-fill pack. See
+   shop.playboicarti.com.md. */
+.page__stat-grid--auto {
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 24px;
+}
+
+.page__stat-grid--auto .page__stat {
+  padding: var(--space-sm) var(--space-sm-plus);
+  min-height: 64px;
+}
+
+.page__stat {
+  padding: var(--space-sm-plus);
+  min-height: 74px;
+  border-radius: var(--radius);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+}
+
+/* Was 22px — Apple's h3/body-large size is 28px/600; adopting it directly
+   instead of an arbitrary in-between step. See apple.com.md. */
+.page__stat strong {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The one dominant metric per stat grid (Library's total audio count). */
+.page__stat--hero {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Was 28px (same as the now-bumped base stat, so hero no longer stood out) —
+   scaled up one tier from Apple's 28px h3 the way Apple's own scale jumps
+   between tiers (h3 28px → h2 56px), moderated for a numeral in a tile
+   rather than a full heading. See apple.com.md. */
+.page__stat--hero strong {
+  font-size: 36px;
+}
+
+.page__stat span {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-dim);
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+@media (max-width: 520px) {
+  .page__stat-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.page__path {
+  font-size: 12px;
+  color: var(--text-2);
+  word-break: break-all;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.page__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+}
+
+.page__pill--ok {
+  color: var(--ink);
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.page__pill--ok::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.page__pill--warn {
+  color: var(--ink-dim);
+  border-color: var(--line);
+  background: var(--bg-elev-2);
+}
+
+.page__error {
+  margin: 0;
+  border-radius: var(--radius);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  color: var(--ink-dim);
+  /* Same text treatment as the red error blocks (.auth__error, .hero__error):
+     UI face, weight 500, even 42px box (20 line + 2×10 padding + 2×1 border). */
+  padding: 10px 14px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.page--figma .page__error {
+  margin-top: var(--space-md);
+  text-align: center;
+}
+
+.help__trademark {
+  margin: 24px 0 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-3);
+  opacity: 0.6;
+}
+
+.page__success {
+  margin: 0;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  /* Same text treatment as the red error blocks (.auth__error, .hero__error):
+     UI face, weight 500, even 42px box (20 line + 2×10 padding + 2×1 border). */
+  padding: 10px 14px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.page__btn {
+  appearance: none;
+  border: 1px solid var(--ink);
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--bg-base);
+  cursor: pointer;
+  transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease),
+    background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+
+.page__btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -12px rgba(255, 255, 255, 0.5);
+}
+
+.page__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page__btn--ghost {
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+}
+
+.page__btn--ghost:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: none;
+  transform: none;
+}
+
+.page__btn.help__support-email {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.page__btn.legal__open-btn {
+  font-family: var(--font-hero);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.page__list-item strong,
+.page__list-item span {
+  line-height: 20px;
+}
+
+.help__trademark {
+  line-height: 16px;
+}
+
+.page__btn--danger {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--ink-dim);
+}
+
+.page__btn--danger:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  box-shadow: none;
+  transform: none;
+}
+
+.page__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.page__list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+}
+
+.page__list-item strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.page__list-item span {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* Legal documents use the same restrained, outlined bar language as the
+   support email rather than reading as a second level of heavy cards. */
+.legal__doc-bar {
+  border-radius: var(--radius);
+  background: transparent;
+  border-color: var(--line);
+  padding: 10px 14px;
+}
+
+/* Fixed width, not text + padding: "Открыть" measured 96.22px and, being
+   right-aligned in the bar, its outline landed at x=.78. Same visual size. */
+.legal__doc-bar .legal__open-btn {
+  min-height: 32px;
+  width: 96px;
+  padding: 5px 0;
+  background: transparent;
+  color: var(--ink-dim);
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.legal__doc-bar .legal__open-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-strong);
+  color: var(--ink);
+  box-shadow: none;
+  transform: none;
+}
+
+.page__faq {
+  gap: 0;
+}
+
+.page__faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.page__faq-item:last-child {
+  border-bottom: none;
+}
+
+/* Was plain text with no expand affordance — a chevron now makes the
+   accordion behavior (already wired via aria-expanded/openFaq) visible, not
+   just functional. */
+.page__faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  padding: 12px 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.page__faq-q:hover {
+  color: var(--ink);
+}
+
+.page__faq-chevron {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--ink-dim);
+  transition: transform var(--t) var(--ease);
+}
+
+.page__faq-chevron--open {
+  transform: rotate(180deg);
+}
+
+.page__faq-a {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.settings__feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.settings__feedback textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 80px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.page__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink-dim);
+  cursor: pointer;
+}

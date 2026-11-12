@@ -1,0 +1,375 @@
+/* Home hero — one centred focal composition on flat black.
+
+   Replaces BeatComposer's two-column instrument panel. Everything the old
+   layout carried in chrome (LED, orbit rings, role chips, material card) is
+   gone: what remains is the headline plus exactly one action, which is what
+   the screen is actually for. The supporting blocks below (attachment, genre,
+   scale, notice, error) keep BeatComposer's visual language so a MIDI-attached
+   session still reads as the same app. */
+
+/* Sizes below are taken directly from the Figma layer inspector (exact
+   values, not eyeballed off a screenshot render) — width/height/position of
+   Rectangle 60, the heading text, and the label text all live in one shared
+   coordinate space, which is what lets the ratios below (e.g. the card's
+   52px side padding) be read straight off the numbers instead of guessed:
+     Rectangle 60:  X552 Y439  W1200 H150  radius 50  stroke 5 (#2D2D2D)  fill #181818
+     Heading:       X733 Y391  W838  H48   Syne ExtraBold 40  fill #FFFFFF
+     Label:         X604 Y495  W376  H38   Fjalla One Regular 30  fill #FBFAF7
+   Card left edge -> label start = 604-552 = 52px; card right edge - plus
+   inspector position = 52px too (symmetric). Heading and card share the
+   same center X (both centered on 1152) — confirms this is one centered
+   composition, not independently placed elements. */
+.hero {
+  /* The Figma composition sits in the middle of a wide artboard; letting the
+     panel consume every pixel of a desktop window made it read as a heavy
+     banner. Keep the same centred relationship at the app's smaller runtime
+     size, while retaining a practical minimum for narrow desktop windows. */
+  width: min(100%, 1080px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Figma 1:2 — title top 391, card top 439 (= ~48px = one 40px ExtraBold
+     line). Title sits on the capsule; any flex gap floats it above. */
+  gap: 0;
+  text-align: center;
+}
+
+/* Was Fjalla One — that was this project's own earlier brief, but the
+   actual Figma layer for this exact string is Syne ExtraBold 40, not Fjalla
+   One (Fjalla One is what the export uses for the label below and the
+   sidebar's EN/RU toggle, not the headline). Trusting the file over the
+   older verbal spec since it's the source now being matched 1:1. Syne is
+   already `--font-display`'s primary face, so no new font load needed. */
+.hero__title {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2vw, 34px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-wrap: balance;
+  /* Optical alignment from the reference: the title sits slightly above and
+     left of the otherwise perfectly centred island. Transform preserves the
+     panel's layout position below it. */
+  transform: translate(-15px, -30px);
+}
+
+/* Keep a little air under the title for supporting blocks (attachment /
+   genre / error) that stack below the panel — not between title and panel. */
+.hero > .hero__slot {
+  margin-top: 0;
+}
+
+.hero > :not(.hero__title):not(.hero__slot) {
+  margin-top: 12px;
+}
+
+/* Fixed-height slot so swapping the empty line for the CTA doesn't shift the
+   headline up or down — the two states cross-fade in place.
+   width:100% is load-bearing, not decorative: `.hero` is a column flex
+   container, so without an explicit width here `.hero__slot` shrinks to fit
+   its child's content. `.hero__panel`'s `width: min(100%, 1200px)` then had
+   no real percentage basis to resolve against and collapsed to
+   content-width too — a small content-hugging box instead of the wide
+   1200px bar, which is what made its 5px border / 50px radius read as a
+   fat, stubby blob instead of a sleek wide card. */
+.hero__slot {
+  position: relative;
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-30px);
+}
+
+/* ---- Shared card: both states (empty / material-attached) ------------- */
+
+/* Rectangle 60 from the Figma inspector: W1200 H150, corner radius 50
+   (exact — not the SVG-export-derived 47.5 estimated earlier), 5px inside
+   stroke #2D2D2D, fill #181818. 52px horizontal padding is the measured gap
+   from the rect's edges to the label/plus inspector positions (604-552 on
+   the left, matching on the right) — not estimated from a screenshot.
+   Vertical placement is handled by centering flex children in a 150px-tall
+   box rather than replaying Figma's padding numbers directly, since those
+   partly reflect each text layer's own font line-height slack, not real
+   empty space.
+
+   One card, two fillings: Figma reuses this exact rectangle for both the
+   empty state (label + "+") and the material-attached state ("{N} FILES" +
+   send button) rather than swapping in a standalone pill button — so this
+   class is shared instead of split into `.hero__empty` / `.hero__cta` like
+   the pre-Figma version had. */
+.hero__panel {
+  margin: 0;
+  /* A long, low island: it should span the stage like the reference, not
+     become a compact pill underneath the heading. */
+  width: min(calc(100% - 32px), 1068px);
+  height: clamp(104px, 5.5vw, 112px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 0 clamp(34px, 3vw, 48px);
+  border: var(--figma-card-border) solid var(--figma-card-stroke);
+  border-radius: clamp(34px, 2vw, 42px);
+  background: var(--figma-card-fill);
+  box-sizing: border-box;
+}
+
+.hero__panel--dragging {
+  border-color: rgba(255, 255, 255, 0.88);
+  background: #222;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+.hero__panel[role="button"] {
+  cursor: pointer;
+}
+
+.hero__panel[role="button"]:focus-visible {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+/* Figma: Fjalla One Regular 30, fill #FBFAF7 — close enough to var(--ink)
+   (#FCFBF8, 1 unit off per channel) that the token is used instead of
+   another one-off literal; unlike the heading's #FFFFFF this one isn't a
+   meaningfully different white. */
+.hero__panel-text {
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-hero);
+  font-size: clamp(24px, 1.55vw, 28px);
+  font-weight: 400;
+  letter-spacing: 0;
+  /* Whole px, even against the panel: (104 height − 2×5 border − 30) / 2 = 32,
+     so flex centering lands the glyphs on a pixel. 1.2 → 28.8px put the text
+     on a half pixel and it rendered soft. */
+  line-height: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Icon button (lucide Plus, 24px, rendered in HomeHero.tsx), not the
+   literal "+" text glyph the Figma layer actually is — icon over glyph is a
+   deliberate override of the Figma source for this one element. No hover
+   fill/border: the "+" signals interactivity through its own color shifting
+   (dim -> full ink), not a highlighted background behind it. */
+.hero__add {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--nav-icon);
+  cursor: pointer;
+  transition: color var(--t) var(--ease);
+}
+
+.hero__add:hover,
+.hero__add:focus-visible {
+  color: var(--nav-icon-active);
+}
+
+.hero__add:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--glow);
+  border-radius: var(--radius-xs);
+}
+
+/* ---- State 2: material attached — send button -------------------------- */
+
+/* Exact Figma values (node 1:13/1:22, pulled via the Figma MCP, not
+   eyeballed): size 50x50, background #2d2d2d (solid, no border), radius
+   10px. The first pass guessed a near-transparent 0.04-alpha fill with a
+   border — against the card's #181818 that read as barely-there, which is
+   what made the button look small/weak even at a comparable pixel size.
+   A solid mid-grey box is what actually gives it visual presence. */
+.hero__send {
+  appearance: none;
+  flex: 0 0 auto;
+  width: var(--figma-btn-h);
+  height: var(--figma-btn-h);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--figma-btn-radius);
+  background: #2d2d2d;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--t) var(--ease);
+}
+
+.hero__send:hover:not(:disabled),
+.hero__send:focus-visible:not(:disabled) {
+  background: #4a4a4a;
+}
+
+.hero__send:focus-visible {
+  outline: none;
+}
+
+.hero__send:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ---- Supporting blocks (attachment / genre / scale / notice / error) ---- */
+
+.hero__attachment,
+.hero__genre,
+.hero__notice,
+.hero__error {
+  width: 100%;
+  padding: var(--space-sm) var(--space-sm-plus);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  /* --radius (20px) is the card token, too round for a 12px-text info strip;
+     --radius-sm is the documented minor-control step. BeatComposer used an
+     off-scale 14px here. */
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--ink-dim);
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: start;
+}
+
+.hero__attachment,
+.hero__genre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.hero__attachment-name,
+.hero__genre-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero__attachment-clear {
+  appearance: none;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-dim);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color var(--t) var(--ease);
+}
+
+.hero__attachment-clear:hover {
+  color: var(--ink);
+}
+
+.hero__genre-select {
+  appearance: none;
+  flex: 0 0 auto;
+  padding: 6px 28px 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-xs);
+  background: rgba(255, 255, 255, 0.06)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 8l5 5 5-5' stroke='%23FCFBF8' stroke-opacity='0.55' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 8px center;
+  background-size: 14px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.hero__genre-select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.hero__genre-select option {
+  background: #0b0b0b;
+  color: var(--ink);
+}
+
+.hero__scale-check {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--ink-dim);
+  font-family: var(--font-body);
+  font-size: 12px;
+  text-align: start;
+}
+
+.hero__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius);
+  background: var(--signal-soft);
+  border-color: var(--signal-soft);
+  color: var(--error);
+  /* Same treatment as .auth__error: weight 500 instead of a thin 400, and an
+     even 42px box (20 line + 2×10 padding + 2×1 border) so it sits on whole
+     pixels instead of 47px at y=.5. */
+  padding: 10px var(--space-sm-plus);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero__error svg {
+  flex: 0 0 auto;
+}
+
+/* Overrides the generic 12px top gap (above) with enough of it clawed back
+   to cancel .hero__slot's -30px visual offset — otherwise this reads as an
+   unrelated block floating under the panel instead of its own error state. */
+.hero > :not(.hero__title):not(.hero__slot).hero__error {
+  margin-top: -20px;
+}
+
+@media (max-width: 560px) {
+  .hero {
+    gap: 0;
+  }
+
+  /* The label + "+"/send-button no longer fit on one line here, so let the
+     pair wrap as a unit instead of clipping against the card's normal
+     fixed 150px height (sized for the single-line desktop layout). */
+  .hero__panel {
+    height: auto;
+    min-height: 150px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-block: var(--space-md);
+  }
+
+  .hero__panel-text {
+    white-space: normal;
+  }
+}

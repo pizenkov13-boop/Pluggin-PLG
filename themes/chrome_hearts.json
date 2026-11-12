@@ -1,0 +1,26 @@
+{
+  "name": "Chrome Hearts",
+  "slug": "chrome_hearts",
+  "vibe": "Liquid chrome on pure black. Cold, expensive, metallic. Grind / luxury trap.",
+  "colors": {
+    "background": "#050505",
+    "background_alt": "#0e0e0e",
+    "panel": "#161616",
+    "channel_rack": "#101010",
+    "accent": "#c0c0c0",
+    "accent_hover": "#e8e8e8",
+    "selection": "#c0c0c0",
+    "text": "#f0f0f0",
+    "text_dim": "#8a8a8a",
+    "grid_line": "#222222",
+    "playhead": "#c0c0c0"
+  },
+  "il_theme_editor": {
+    "Main background": "#050505",
+    "Panel background": "#161616",
+    "Knob / control": "#c0c0c0",
+    "Highlight / selection": "#c0c0c0",
+    "Text": "#f0f0f0",
+    "Dimmed text": "#8a8a8a"
+  }
+}

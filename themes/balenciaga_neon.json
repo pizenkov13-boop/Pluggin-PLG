@@ -1,0 +1,26 @@
+{
+  "name": "Balenciaga Neon",
+  "slug": "balenciaga_neon",
+  "vibe": "Dark minimal, one cold neon edge. Runway / post-luxury. Restraint, not RGB.",
+  "colors": {
+    "background": "#0a0a0a",
+    "background_alt": "#0f0f0f",
+    "panel": "#131313",
+    "channel_rack": "#0d0d0d",
+    "accent": "#ff2d2d",
+    "accent_hover": "#ff5757",
+    "selection": "#ff2d2d",
+    "text": "#fafafa",
+    "text_dim": "#6f6f6f",
+    "grid_line": "#1a1a1a",
+    "playhead": "#ff2d2d"
+  },
+  "il_theme_editor": {
+    "Main background": "#0a0a0a",
+    "Panel background": "#131313",
+    "Knob / control": "#ff2d2d",
+    "Highlight / selection": "#ff2d2d",
+    "Text": "#fafafa",
+    "Dimmed text": "#6f6f6f"
+  }
+}

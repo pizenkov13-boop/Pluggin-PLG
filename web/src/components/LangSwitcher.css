@@ -1,0 +1,58 @@
+/* Direct RU⇄EN toggle — no dropdown. Was a trigger + absolutely-positioned
+   menu + option rows (see git history for that version); collapsed to a
+   single button since the product only needs two languages, not the full
+   9-locale picker the menu used to expose. */
+.lang {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink-dim);
+  cursor: pointer;
+  text-align: start;
+  transition: color var(--t) var(--ease), border-color var(--t) var(--ease),
+    background var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+
+.lang:hover {
+  color: var(--ink);
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.04);
+}
+
+/* Fjalla One is a single-weight (400) condensed display face — asking for
+   bold would synthesize a fake one. Explicit here since locale-typography.css
+   used to lump this in with .account__quota-head/.account__legal-title's
+   shared label treatment (font-weight 800 among other things); it's its own
+   rule now that it carries a different face for a different reason (a short
+   mark, not a heading — see DESIGN.md's Hero-Face Exception). */
+.lang__current {
+  flex-shrink: 0;
+  color: var(--ink);
+  font-family: var(--font-hero);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.lang__name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 720px) {
+  .lang__name {
+    display: none;
+  }
+}

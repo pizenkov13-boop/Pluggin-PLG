@@ -1,0 +1,106 @@
+/* Connection-lost is a transient, self-healing state, not a hard error —
+   a neutral bordered card, no alarm-red. */
+.offline-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+}
+
+.offline-banner__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink-dim);
+}
+
+.offline-banner__body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.offline-banner strong {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.offline-banner__desc {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+.offline-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.offline-banner__btn {
+  appearance: none;
+  min-height: 34px;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink-dim);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color var(--t) var(--ease),
+    background var(--t) var(--ease),
+    color var(--t) var(--ease);
+}
+
+.offline-banner__btn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--ink);
+}
+
+.offline-banner__btn--primary {
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.offline-banner__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+@media (max-width: 520px) {
+  .offline-banner {
+    flex-direction: column;
+  }
+
+  .offline-banner__actions {
+    width: 100%;
+  }
+
+  .offline-banner__btn {
+    flex: 1 1 auto;
+  }
+}

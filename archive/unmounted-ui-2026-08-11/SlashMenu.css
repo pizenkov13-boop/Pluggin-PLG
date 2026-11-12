@@ -1,0 +1,36 @@
+.slash-menu {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  min-width: 220px;
+  max-height: 280px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: var(--radius);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 20px 50px -16px rgba(0, 0, 0, 0.9);
+  z-index: 40;
+}
+
+.slash-menu__item {
+  width: 100%;
+  text-align: start;
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: color var(--t) var(--ease), background var(--t) var(--ease);
+}
+
+.slash-menu__item--active,
+.slash-menu__item:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+}

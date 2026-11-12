@@ -1,0 +1,71 @@
+"""PLG 808 Glide — slide/portamento + note-length control for 808s.
+
+Select the 808 notes you want to glide between, then run this. Slide +
+portamento give the classic pitched-808 glide. A glide only sounds if each note
+actually reaches the next one, so this script also manages note length:
+
+  * Stretch to next note   — butt each note up against the following one
+  * Overlap (beats)        — extend past the next note's start for a smooth slide
+  * Min length (beats)     — force short 808s long enough to be heard
+
+(FL's scripting API can only turn slide/porta ON, which is exactly what we want.)
+"""
+
+from __future__ import annotations
+
+import flpianoroll as flp
+
+
+def createDialog():
+    form = flp.ScriptDialog(
+        "PLG 808 Glide",
+        "Add glide + manage note length so the slide has somewhere to go.",
+    )
+    form.addInputCheckbox("Slide", True)
+    form.addInputCheckbox("Portamento", True)
+    form.addInputCheckbox("Stretch to next note", True)
+    form.addInputKnob("Overlap (beats)", 0.25, 0.0, 2.0)
+    form.addInputKnob("Min length (beats)", 1.0, 0.0, 8.0)
+    form.addInputCheckbox("Only selected notes", True)
+    return form
+
+
+def _target_indices(only_selected):
+    indices = []
+    for i in range(flp.score.noteCount):
+        note = flp.score.getNote(i)
+        if (not only_selected) or note.selected:
+            indices.append(i)
+    return indices
+
+
+def apply(form):
+    do_slide = bool(form.getInputValue("Slide"))
+    do_porta = bool(form.getInputValue("Portamento"))
+    do_stretch = bool(form.getInputValue("Stretch to next note"))
+    overlap = int(round(float(form.getInputValue("Overlap (beats)")) * flp.score.PPQ))
+    min_len = int(round(float(form.getInputValue("Min length (beats)")) * flp.score.PPQ))
+    only_selected = bool(form.getInputValue("Only selected notes"))
+
+    targets = _target_indices(only_selected)
+    if not targets:
+        flp.Utils.ShowMessage("PLG 808 Glide: select some 808 notes first.")
+        return
+
+    ordered = sorted(targets, key=lambda i: flp.score.getNote(i).time)
+
+    if do_stretch and len(ordered) > 1:
+        for a, b in zip(ordered, ordered[1:]):
+            note = flp.score.getNote(a)
+            nxt = flp.score.getNote(b)
+            if nxt.time > note.time:
+                note.length = (nxt.time - note.time) + overlap
+
+    for i in ordered:
+        note = flp.score.getNote(i)
+        if min_len and note.length < min_len:
+            note.length = min_len
+        if do_slide:
+            note.slide = True
+        if do_porta:
+            note.porta = True

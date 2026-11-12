@@ -1,0 +1,78 @@
+/* Flat --bg-base, nothing layered on top. This used to carry a blue-tinted
+   radial mesh, an off-palette #030303→#08090c diagonal, and a masked 64px
+   grid overlay — three separate treatments competing behind one centred
+   headline. The screen is now a single black field, which is what makes the
+   hero read as the only object on it.
+
+   Top padding was --space-xl (48px) — Rick Owens and Balenciaga both cite
+   100px as their largest observed spacing value; more void above the one
+   composition center reads closer to Travis Scott's "single focal element
+   floating on black" than the previous, tighter 48px. See rickowens.eu.md,
+   balenciaga.com.md, travisscott.com.md. */
+.home {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg) var(--space-gutter);
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 0;
+  background: var(--bg-base);
+}
+
+/* The whole Home stage accepts material. This is deliberately a perimeter
+   signal, not a second drop card: it confirms the file can be released
+   anywhere on this screen while the existing island remains the focal object. */
+.home::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 30px;
+  box-shadow:
+    inset 0 0 36px rgba(255, 255, 255, 0.28),
+    inset 0 0 92px rgba(255, 255, 255, 0.12),
+    0 0 28px rgba(255, 255, 255, 0.16);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.home--dropping::after {
+  opacity: 1;
+}
+
+.home--dropping .hero__panel {
+  border-color: rgba(255, 255, 255, 0.88);
+  background: #222;
+}
+
+.home > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home > .hero,
+.home > .generating {
+  margin-block: auto;
+}
+
+@media (max-height: 760px) {
+  .home {
+    padding-block: var(--space-md);
+  }
+}
+
+@media (max-width: 640px) {
+  .home {
+    justify-content: flex-start;
+    padding: var(--space-md-plus) var(--space-sm-plus) var(--space-lg);
+  }
+}

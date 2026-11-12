@@ -1,0 +1,49 @@
+.waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 64px;
+  width: 100%;
+}
+
+.waveform__bar {
+  flex: 1 1 0;
+  min-width: 1.5px;
+  max-width: 3px;
+  border-radius: 1px;
+  background: var(--ink);
+  opacity: 0.5;
+  transform-origin: center bottom;
+  transition: opacity var(--t) var(--ease);
+}
+
+/* Still monitor — quiet audio readout at rest. */
+.waveform:not(.waveform--live) .waveform__bar {
+  opacity: 0.28;
+}
+
+/* Live equalizer — pulsing studio load, monochrome. */
+.waveform--live .waveform__bar {
+  height: 28% !important;
+  opacity: 0.8;
+  animation: wf-pulse 0.95s var(--ease) infinite alternate;
+}
+
+@keyframes wf-pulse {
+  0% {
+    transform: scaleY(0.12);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0.92;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveform--live .waveform__bar {
+    animation: none;
+    transform: scaleY(0.6);
+  }
+}

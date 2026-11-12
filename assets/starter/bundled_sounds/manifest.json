@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "count": 16,
+  "files": [
+    "808_opium_heavy.wav",
+    "808_rage_distort.wav",
+    "808_starboy_clean.wav",
+    "808_phonk_sub.wav",
+    "808_glide_stab.wav",
+    "kick_punch_trap.wav",
+    "kick_opium_click.wav",
+    "kick_boom_808.wav",
+    "hat_tight_machine.wav",
+    "hat_opium_airy.wav",
+    "hat_open_roll.wav",
+    "snare_trap_crack.wav",
+    "snare_rim_layer.wav",
+    "clap_stack.wav",
+    "melody_dark_pluck.wav",
+    "melody_bell_hook.wav"
+  ],
+  "style": "plg_bundled_trap_procedural"
+}

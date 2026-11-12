@@ -1,0 +1,4 @@
+# The DB-IP Lite country database is a ~4 MB binary refreshed quarterly on the
+# server, not tracked in git. See README.md.
+*.mmdb
+*.mmdb.gz

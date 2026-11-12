@@ -1,0 +1,26 @@
+{
+  "name": "Midnight Dark",
+  "slug": "midnight_dark",
+  "vibe": "Near-black room, blood-red glow. Dark trap aesthetic. The default PLG look.",
+  "colors": {
+    "background": "#0a0a0a",
+    "background_alt": "#121212",
+    "panel": "#141414",
+    "channel_rack": "#101010",
+    "accent": "#8b0000",
+    "accent_hover": "#b30000",
+    "selection": "#8b0000",
+    "text": "#e6e6e6",
+    "text_dim": "#7a7a7a",
+    "grid_line": "#1d1d1d",
+    "playhead": "#ff2d2d"
+  },
+  "il_theme_editor": {
+    "Main background": "#0a0a0a",
+    "Panel background": "#141414",
+    "Knob / control": "#8b0000",
+    "Highlight / selection": "#8b0000",
+    "Text": "#e6e6e6",
+    "Dimmed text": "#7a7a7a"
+  }
+}

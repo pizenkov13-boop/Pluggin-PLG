@@ -1,0 +1,117 @@
+{
+  "fixtures": [
+    {
+      "id": "rage_dark_8",
+      "genres": ["rage", "trap", "phonk", "drill"],
+      "pattern": {
+        "bpm": 150,
+        "style": "rage opium dark trap",
+        "user_prompt": "rage dark distorted 808",
+        "tracks": {
+          "kick": [
+            {"time_step": 0.0, "note": "C1", "length": 0.4, "velocity": 110},
+            {"time_step": 2.0, "note": "C1", "length": 0.4, "velocity": 108}
+          ],
+          "snare": [
+            {"time_step": 1.0, "note": "D1", "length": 0.35, "velocity": 105},
+            {"time_step": 3.0, "note": "D1", "length": 0.35, "velocity": 103}
+          ],
+          "clap": [
+            {"time_step": 1.0, "note": "D1", "length": 0.25, "velocity": 92},
+            {"time_step": 3.0, "note": "D1", "length": 0.25, "velocity": 90}
+          ],
+          "hi_hats": [
+            {"time_step": 0.0, "note": "C5", "length": 0.125, "velocity": 100},
+            {"time_step": 0.5, "note": "C5", "length": 0.125, "velocity": 98},
+            {"time_step": 1.0, "note": "C5", "length": 0.125, "velocity": 102},
+            {"time_step": 1.5, "note": "C5", "length": 0.125, "velocity": 96},
+            {"time_step": 2.0, "note": "C5", "length": 0.125, "velocity": 100},
+            {"time_step": 2.5, "note": "C5", "length": 0.125, "velocity": 94},
+            {"time_step": 3.0, "note": "C5", "length": 0.125, "velocity": 101},
+            {"time_step": 3.5, "note": "C5", "length": 0.125, "velocity": 97}
+          ],
+          "sub_808": [
+            {"time_step": 0.0, "note": "A1", "length": 2.0, "velocity": 127},
+            {"time_step": 2.0, "note": "G1", "length": 2.0, "velocity": 127}
+          ],
+          "melody_lead": [
+            {"time_step": 0.0, "note": "A4", "length": 1.5, "velocity": 100},
+            {"time_step": 2.0, "note": "G4", "length": 1.0, "velocity": 98},
+            {"time_step": 3.0, "note": "E4", "length": 0.75, "velocity": 96}
+          ]
+        }
+      }
+    },
+    {
+      "id": "edm_festival_16",
+      "genres": ["edm"],
+      "pattern": {
+        "bpm": 128,
+        "style": "festival edm big room",
+        "user_prompt": "edm festival drop",
+        "tracks": {
+          "kick": [
+            {"time_step": 0.0, "note": "C1", "length": 0.5, "velocity": 115},
+            {"time_step": 1.0, "note": "C1", "length": 0.5, "velocity": 115},
+            {"time_step": 2.0, "note": "C1", "length": 0.5, "velocity": 115},
+            {"time_step": 3.0, "note": "C1", "length": 0.5, "velocity": 115}
+          ],
+          "snare": [
+            {"time_step": 1.0, "note": "D1", "length": 0.3, "velocity": 108},
+            {"time_step": 3.0, "note": "D1", "length": 0.3, "velocity": 108}
+          ],
+          "clap": [
+            {"time_step": 1.0, "note": "D1", "length": 0.2, "velocity": 95},
+            {"time_step": 3.0, "note": "D1", "length": 0.2, "velocity": 95}
+          ],
+          "hi_hats": [
+            {"time_step": 0.5, "note": "C5", "length": 0.125, "velocity": 90},
+            {"time_step": 1.5, "note": "C5", "length": 0.125, "velocity": 88},
+            {"time_step": 2.5, "note": "C5", "length": 0.125, "velocity": 90},
+            {"time_step": 3.5, "note": "C5", "length": 0.125, "velocity": 88}
+          ],
+          "melody_lead": [
+            {"time_step": 0.0, "note": "A4", "length": 4.0, "velocity": 105},
+            {"time_step": 4.0, "note": "C5", "length": 4.0, "velocity": 105}
+          ]
+        }
+      }
+    },
+    {
+      "id": "dark_pop_8",
+      "genres": ["dark_pop", "rnb", "pop"],
+      "pattern": {
+        "bpm": 118,
+        "style": "dark synth-pop",
+        "user_prompt": "dark pop moody",
+        "tracks": {
+          "kick": [
+            {"time_step": 0.0, "note": "C1", "length": 0.45, "velocity": 105},
+            {"time_step": 2.0, "note": "C1", "length": 0.45, "velocity": 103}
+          ],
+          "snare": [
+            {"time_step": 1.0, "note": "D1", "length": 0.3, "velocity": 100},
+            {"time_step": 3.0, "note": "D1", "length": 0.3, "velocity": 98}
+          ],
+          "clap": [
+            {"time_step": 1.0, "note": "D1", "length": 0.2, "velocity": 88},
+            {"time_step": 3.0, "note": "D1", "length": 0.2, "velocity": 86}
+          ],
+          "hi_hats": [
+            {"time_step": 0.5, "note": "C5", "length": 0.125, "velocity": 85},
+            {"time_step": 1.5, "note": "C5", "length": 0.125, "velocity": 83},
+            {"time_step": 2.5, "note": "C5", "length": 0.125, "velocity": 85},
+            {"time_step": 3.5, "note": "C5", "length": 0.125, "velocity": 83}
+          ],
+          "sub_808": [
+            {"time_step": 0.0, "note": "D2", "length": 2.0, "velocity": 120}
+          ],
+          "melody_lead": [
+            {"time_step": 0.0, "note": "D4", "length": 2.0, "velocity": 95},
+            {"time_step": 2.5, "note": "F4", "length": 1.0, "velocity": 92}
+          ]
+        }
+      }
+    }
+  ]
+}

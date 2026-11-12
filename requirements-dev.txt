@@ -1,0 +1,4 @@
+# Dev / build tools — pip install -r requirements-dev.txt
+ruff>=0.8.0
+pytest>=8.0.0
+pyinstaller>=6.0.0

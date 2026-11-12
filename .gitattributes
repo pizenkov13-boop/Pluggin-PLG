@@ -1,0 +1,8 @@
+# This repo is developed on Windows with core.autocrlf=true, which rewrites
+# line endings on checkout. That is fine for our own sources, but not for
+# redistributed third-party legal texts: those are canonical documents copied
+# byte-for-byte from upstream metadata, and their bytes must survive a
+# checkout unchanged or `tools/gen_third_party_notices.py --check` can never
+# agree with what is committed.
+third_party_licenses/** -text
+THIRD_PARTY_NOTICES.md -text

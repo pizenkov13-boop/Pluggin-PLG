@@ -1,0 +1,272 @@
+/* The sound browser: a drawer that slides in from the right edge of the window.
+   Plain rows in the manner of FL's channel rack - a file name per line, nothing else. */
+.sound-browser {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  width: min(440px, 100%);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md, 20px) var(--space-md, 20px) var(--space-sm);
+  border-left: 1px solid var(--border-strong, #2a2a2a);
+  background: var(--bg-card, #0c0c0c);
+  box-shadow: -24px 0 60px rgba(0, 0, 0, 0.5);
+  color: var(--ink, #fcfbf8);
+  font-family: var(--font-body, inherit);
+}
+
+.sound-browser__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sound-browser__title {
+  margin: 0;
+  font-family: var(--font-display, inherit);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sound-browser__close,
+.sound-cell__clear {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-dim, #8a8a8a);
+  cursor: pointer;
+  transition: background var(--t, 160ms) var(--ease, ease), color var(--t, 160ms) var(--ease, ease);
+}
+
+.sound-browser__close:hover,
+.sound-browser__close:focus-visible,
+.sound-cell__clear:hover:not(:disabled),
+.sound-cell__clear:focus-visible:not(:disabled) {
+  background: #2d2d2d;
+  color: var(--ink, #fcfbf8);
+  outline: none;
+}
+
+.sound-cell__clear:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* ---- the six cells ---- */
+.sound-browser__cells {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sound-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 8px 28px 8px 10px;
+  border: 1px dashed #343434;
+  border-radius: 10px;
+  background: #121212;
+  transition: border-color var(--t, 160ms) var(--ease, ease), background var(--t, 160ms) var(--ease, ease);
+}
+
+.sound-cell--set {
+  border-style: solid;
+  border-color: #4a4a4a;
+  background: #181818;
+}
+
+.sound-cell--over {
+  border-style: solid;
+  border-color: var(--ink, #fcfbf8);
+  background: #222;
+}
+
+.sound-cell__label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim, #8a8a8a);
+}
+
+.sound-cell__value {
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sound-cell:not(.sound-cell--set) .sound-cell__value {
+  color: var(--ink-dim, #8a8a8a);
+}
+
+.sound-cell__clear {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 4px;
+}
+
+.sound-browser__hint,
+.sound-browser__message {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim, #8a8a8a);
+}
+
+.sound-browser__message {
+  color: var(--ink, #fcfbf8);
+}
+
+/* ---- the list ---- */
+.sound-browser__list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  border-top: 1px solid #1f1f1f;
+}
+
+.sound-browser__note {
+  padding: 14px 4px;
+  font-size: 13px;
+  color: var(--ink-dim, #8a8a8a);
+}
+
+.sound-row {
+  /* A long library stays cheap: rows off screen are not laid out. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 32px;
+  border-bottom: 1px solid #161616;
+}
+
+.sound-row__main {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 8px;
+  border: none;
+  background: transparent;
+  color: var(--ink, #fcfbf8);
+  font: inherit;
+  font-size: 13px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.sound-row__main:hover,
+.sound-row__main:focus-visible {
+  background: #181818;
+  outline: none;
+}
+
+/* A file PLG cannot read: shown, but it cannot be played or picked. */
+.sound-row--unusable .sound-row__main {
+  opacity: 0.38;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.sound-row--selected .sound-row__main {
+  background: #202020;
+}
+
+.sound-row__icon {
+  flex: 0 0 auto;
+  opacity: 0.35;
+}
+
+.sound-row--playing .sound-row__icon {
+  opacity: 1;
+}
+
+.sound-row__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sound-row__assign {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 2px 8px 10px 28px;
+  background: #202020;
+}
+
+.sound-row__chip {
+  appearance: none;
+  padding: 4px 9px;
+  border: 1px solid #3a3a3a;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink, #fcfbf8);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background var(--t, 160ms) var(--ease, ease);
+}
+
+.sound-row__chip:hover:not(:disabled),
+.sound-row__chip:focus-visible:not(:disabled) {
+  background: #3a3a3a;
+  outline: none;
+}
+
+.sound-row__chip--on {
+  border-color: var(--ink, #fcfbf8);
+}
+
+.sound-row__chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.sound-browser__foot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sound-browser__auto {
+  appearance: none;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 12px;
+  background: #2d2d2d;
+  color: var(--ink, #fcfbf8);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--t, 160ms) var(--ease, ease);
+}
+
+.sound-browser__auto:hover:not(:disabled),
+.sound-browser__auto:focus-visible:not(:disabled) {
+  background: #4a4a4a;
+  outline: none;
+}
+
+.sound-browser__auto:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

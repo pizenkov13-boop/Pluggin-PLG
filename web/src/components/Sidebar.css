@@ -1,0 +1,295 @@
+/* The divider isn't gone — it's back, closer to the icons. The actual
+   problem wasn't the line's own weight, it was the 64px rail leaving ~10px
+   of bare black gutter between the 44px icon column and the edge: with
+   nothing else nearby, that isolated line read as its own heavy object
+   floating in empty space. Narrowing the rail to 52px pulls the divider in
+   against the icons (4px each side instead of 10px) so it reads as part of
+   the icon column's edge, not a separate slab. */
+.sidebar {
+  flex-shrink: 0;
+  width: 52px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-sidebar);
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.06);
+  padding: var(--space-sm-plus) 0;
+  /* Offset of the 44px icon column inside the 52px rail — shared by the nav,
+     the footer and the active bar (which cancels it to sit on x=0). */
+  --rail-inset: 3px;
+}
+
+.sidebar__brand {
+  width: 100%;
+  height: 66px;
+  padding: 18px 5px 8px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* The component crops the exported SVG's empty artboard for this compact
+   surface, so the actual PLG mark—not invisible padding—is aligned to the
+   nav grid.  A fixed box prevents the tail from making the mark look low. */
+.sidebar__logo {
+  width: 43px;
+  height: 26px;
+  color: var(--ink);
+  display: block;
+}
+
+.sidebar__nav {
+  align-self: flex-start;
+  margin-inline-start: var(--rail-inset);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar__item {
+  appearance: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--nav-icon);
+  cursor: pointer;
+  transition: color var(--t) var(--ease), background var(--t) var(--ease),
+    border-color var(--t) var(--ease);
+}
+
+/* Active-item indicator: a solid rectangle reads as a real selection, and a
+   crisp left bar names it at a glance. Achromatic — this is chrome, not
+   content, so it carries white light instead of a brand accent
+   (see DESIGN.md: color only through content). */
+/* 1px + a tighter glow — a bolder 2px/3px core with an 8-12px blur used to
+   double the bar's apparent width and read as a heavy slab next to the
+   icons' thin stroke. The blur is what carries visual weight here, not the
+   core: dropped to 4px/0.16 alpha so it stays a soft hint of light.
+   inset-inline-start pins it flush against the rail's own edge (x=0) rather
+   than floating with a gap — the fixed 3px inset for the 44px icon column
+   makes -3px land the bar exactly on the rail boundary.
+   Re-measure and adjust this offset if `.sidebar`'s width or `.sidebar__item`'s
+   width changes; it's the same rail-centering math as the tooltip's
+   `left: calc(100% + 16px)` below. */
+.sidebar__item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--rail-inset));
+  top: 50%;
+  height: 14px;
+  width: 1px;
+  border-radius: 0 1px 1px 0;
+  background: var(--ink);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.16);
+  transform: translateY(-50%) scaleY(0);
+  transform-origin: center;
+  opacity: 0;
+  transition: transform var(--t) var(--ease), opacity var(--t) var(--ease);
+}
+
+/* 24px at stroke-width 2, straight from lucide — the icon is drawn at its
+   native size instead of being scaled down to 20px. Inactive/active is carried
+   entirely by `color` (--nav-icon → --nav-icon-active); the old 0.7/0.95/1
+   opacity ramp on top of it made the same state readable two different ways
+   and muddied the grey the brief specifies. */
+.sidebar__item svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  transition: transform var(--t) var(--ease);
+}
+
+/* No scale on the active icon: scale(1.04) turned the 24px stroke into a
+   24.96px raster and visibly softened it. Active state is carried by color,
+   fill and the left bar. */
+
+.sidebar__item:hover {
+  color: var(--nav-icon-active);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar__item--active {
+  color: var(--nav-icon-active);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.05));
+  border-color: var(--border-strong);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.sidebar__item--active::before {
+  transform: translateY(-50%) scaleY(1);
+  opacity: 1;
+}
+
+/* Floating label — appears only on hover/focus, doesn't push layout width.
+   Sidebar stays a fixed narrow icon column at all times. Reveal opacity/x is
+   now driven by Sidebar.tsx's motion variants (real spring physics) instead
+   of the CSS transition this rule used to carry — position/paint only here.
+   Font-size was 12px — Rick Owens' dominant nav/label text is 11px, the one
+   size that "carries nav, breadcrumbs, product names" almost everywhere in
+   that system; this is the closest analog in our UI (the sidebar's only
+   visible text). See rickowens.eu.md.
+
+   left offset: back to +10px — the +16px this became was overcorrecting an
+   earlier "it touches the rail" complaint; the touch was actually the
+   intended look, and +16px just left the label floating too far from its
+   icon instead. Shared by every sidebar tooltip (nav items, account,
+   language) via this one class, not specific to any one entry — Home is
+   just whichever one happened to be in the screenshot. */
+.sidebar__tip {
+  position: absolute;
+  left: calc(100% + 10px);
+  /* Centered by layout (auto block margins), not by `translate: 0 -50%`: a
+     transform leaves the text on a composited layer at whatever fractional
+     offset the centering lands on, and at 125%/150% Windows scaling that is a
+     half device pixel (112.5px at 125%), which renders soft. Layout snaps. */
+  inset-block: 0;
+  margin-block: auto;
+  height: fit-content;
+  padding: 6px 10px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 60;
+}
+
+/* Whole-pixel line box: 14 + 2×6 + 2×1 = 28px, so the -50% centering shift
+   is exactly -14px. Nav tips got 14.3px from locale-typography's
+   `.sidebar__item span { line-height: 1.3 }` and the language tip inherited
+   16.5px, so every tip sat on a half pixel and the RU one was 2.5px taller.
+   `.sidebar` prefix is there to outrank that `.sidebar__item span` rule. */
+.sidebar .sidebar__tip {
+  line-height: 14px;
+}
+
+.sidebar__foot {
+  align-self: flex-start;
+  margin-inline-start: var(--rail-inset);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.sidebar__quota {
+  width: 28px;
+}
+
+.sidebar__quota-track {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.sidebar__quota-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, var(--ink) 100%);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+  opacity: 0.9;
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left;
+  transition: transform 400ms var(--ease);
+}
+
+/* LangSwitcher collapses to an icon-sized square inside the narrow footer —
+   scoped override, LangSwitcher.tsx itself is untouched. LangSwitcher is now
+   a single toggle <button class="lang">, not a wrapper div around a trigger
+   + dropdown, so this sizing lands directly on `.lang` (there's no more
+   `.lang__trigger` to target separately).
+   Kept at 44px, matching the nav items' square: this box's TOP edge is what
+   sets the gap up to the quota bar above it, and shrinking the box (tried
+   32px, then 22px) pulled that top gap in too, since the centered text rose
+   toward the box's unchanged top edge — visibly closing the quota-to-RU gap
+   nobody asked to touch. The actual ask (profile closer to RU) is handled
+   below with a margin on the account button instead, which only moves the
+   gap on that one side. */
+.sidebar__foot .lang {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+  border: none;
+  background: transparent;
+}
+
+/* Pull the account button up specifically — not a change to `.sidebar__foot`'s
+   shared `gap` (6px), which would also tighten quota→lang above.
+   Matching box-to-box gaps (-2px, giving 4px box edge to box edge, same as
+   `.sidebar__nav`'s `gap: 4px`) still LOOKED wrong: box edges aren't what
+   the eye tracks. Measured the actual rendered SVG-to-SVG gap between two
+   nav icons — 23.5px — versus the RU text span to the account icon's own
+   SVG — 28px at -2px margin, because "RU"'s 16px line box carries real
+   invisible leading around the glyph ink that an SVG (drawn edge-to-edge in
+   its 24×24 box) doesn't have. -6px is the whole-pixel equivalent: the
+   visible gap remains unchanged while every rail control stays on the pixel
+   grid. Only
+   `.sidebar__item` inside `.sidebar__foot` is the account button — nav items
+   live in `.sidebar__nav` — so no extra class is needed to target just it. */
+.sidebar__foot .sidebar__item {
+  margin-top: -6px;
+}
+
+.sidebar__foot .lang__name {
+  display: none;
+}
+
+/* Hover tooltip for the collapsed language trigger — CSS-only (LangSwitcher
+   isn't a motion component), same visual language as the nav tooltips
+   above. */
+.sidebar__lang-wrap {
+  position: relative;
+}
+
+/* `translate` (used here) and `transform` are independent CSS properties
+   that compose rather than override each other. The base `.sidebar__tip`
+   rule already centers vertically via `translate: 0 -50%`; this used to
+   redeclare that same -50% Y-shift through `transform: translateY(-50%)`
+   on top of it, so the two stacked into a ~30px lift instead of ~15px —
+   the tooltip rendered well above the RU icon instead of level with it.
+   Using `translate` here too (x and y together) replaces the base value
+   outright instead of stacking with it. */
+.sidebar__lang-wrap .sidebar__tip--lang {
+  /* Nav tips are positioned from their button's padding box (inside its 1px
+     border); this wrapper has no border, so 100% + 10px put the RU tip 1px
+     further out than the others. */
+  left: calc(100% + 9px);
+  opacity: 0;
+  translate: -4px 0;
+  transition: opacity var(--t) var(--ease), translate var(--t) var(--ease);
+}
+
+/* :focus-visible, not :focus-within — a button keeps DOM focus after any
+   click on it (LangSwitcher used to be a dropdown trigger; it's a direct
+   RU⇄EN toggle now, but a click still leaves it focused the same way), so
+   :focus-within stayed true long after the pointer had moved away and the
+   label kept floating next to RU with nothing hovered. :focus-visible
+   specifically excludes pointer-driven focus in Chromium/Firefox, so a
+   mouse click no longer pins it — only real Tab-key focus does, which is
+   exactly when a keyboard user needs the label to be visible. */
+.sidebar__lang-wrap:hover .sidebar__tip--lang,
+.sidebar__lang-wrap:has(:focus-visible) .sidebar__tip--lang {
+  opacity: 1;
+  translate: 0 0;
+}

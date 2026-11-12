@@ -1,0 +1,63 @@
+.generating {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.generating__secs {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 8vmin, 52px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* Vertical equalizer — bars breathe on slow, staggered, per-bar cycles
+   (see GeneratingState.tsx for the rickowens.eu.md motion citation). The
+   stage itself carries the slow filter:brightness() pulse. */
+.generating__stage {
+  width: 100%;
+  max-width: 420px;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  margin-block: var(--space-sm);
+}
+
+/* Anchored to the baseline (transform-origin: bottom) so scaleY reads as a
+   real level meter rising from a common floor, not bars floating and
+   shrinking from their own center. */
+.generating__bar {
+  flex: 1;
+  max-width: 10px;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, var(--ink) 0%, rgba(255, 255, 255, 0.35) 100%);
+  transform-origin: bottom center;
+  box-shadow: 0 0 12px -2px rgba(255, 255, 255, 0.3);
+}
+
+.generating__detail {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  text-align: center;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+.generating__tail {
+  color: var(--ink-dim);
+}

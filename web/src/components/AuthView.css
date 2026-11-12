@@ -1,0 +1,480 @@
+.auth {
+  --auth-font: "Fjalla One", "Arial Narrow", sans-serif;
+  /* Fjalla One is a condensed poster face; at 12-15px its Cyrillic smears.
+     Headline, logo and the CTA keep it; everything small and read-or-typed
+     (labels, fields, consent text, links, errors, legal text) uses the app's
+     UI face, which is hinted for small sizes. */
+  --auth-font-small: var(--font-ui);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  /* The app window is a fixed 980×680 (plg_webview.py, resizable=False) —
+     not a resizable page this padding scale was sized for. At 11vh the old
+     top padding alone (~75px) plus the card's own content ran well past
+     680px, clipping the logo above and the "Забыли пароль?" row below with
+     no visible way to tell the rest was just a scroll away. Flat, small
+     padding here so the whole card fits without scrolling in the common
+     case; .shell--auth's overflow-y:auto is still the fallback for a
+     locale whose text runs long. */
+  padding: 20px 24px;
+  box-sizing: border-box;
+  font-family: var(--auth-font);
+  font-synthesis: none;
+}
+
+/* The account surface follows the Figma type rule literally: Fjalla One
+   Regular, Auto leading and 0% tracking. Keep it scoped so it doesn't alter
+   the production workspace typography. */
+.auth,
+.auth button,
+.auth input,
+.auth textarea,
+.auth select {
+  font-family: var(--auth-font) !important;
+  font-weight: 400 !important;
+  font-style: normal;
+  letter-spacing: 0 !important;
+  line-height: normal !important;
+}
+
+.auth__panel {
+  width: min(580px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Compact RU⇄EN toggle in the top-right corner — just the code ("RU"/"EN"),
+   no language name, matching the small pill on the landing header. Lets a
+   user switch language before signing in (the full sidebar switcher only
+   appears once signed in). */
+.auth__lang {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 3;
+}
+
+/* Fixed width instead of text-width + padding: "RU" measured 40.05px, and
+   being right-anchored that put the pill's left border at x=919.95. */
+.auth__lang .lang {
+  gap: 0;
+  width: 40px;
+  padding: 7px 0;
+  justify-content: center;
+}
+
+.auth__lang .lang__name {
+  display: none;
+}
+
+.auth__card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40px 56px 32px;
+  border-radius: 40px;
+  background: #191919;
+  border: 4px solid #303030;
+  /* --auth-gap separates sections; --auth-tight is the one spacing used inside
+     the consent block AND around the CTA/links (checkbox ↔ checkbox ↔ hint ↔
+     button ↔ links), so the whole lower half reads as one even rhythm. */
+  --auth-gap: 16px;
+  --auth-tight: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--auth-gap);
+  box-shadow: none;
+}
+
+/* Whole-px height instead of auto: the 300×145 SVG came out 106.47px tall
+   and pushed the card below it (and every field in it) to y=.23. The logo
+   is vector, so contain absorbs the half-pixel with no visible change. */
+.auth__logo {
+  width: min(220px, 60vw);
+  height: 106px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+  margin-bottom: 10px;
+}
+
+/* Auth is deliberately one-font: this is the compact Fjalla One account
+   surface from the Figma frame, separate from the app's locale type scale. */
+.auth__card h1 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--auth-font) !important;
+  font-size: 34px;
+}
+
+.auth__card p {
+  margin: 0;
+  color: var(--ink-dim);
+  font-family: var(--auth-font-small);
+}
+
+.auth__copy {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.auth__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth__field span {
+  font-family: var(--auth-font-small) !important;
+  font-size: 12px;
+  font-weight: 600 !important;
+  font-style: normal;
+  letter-spacing: 0 !important;
+  line-height: 16px !important;
+  color: #fff;
+}
+
+.auth__field input {
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 2px solid #303030;
+  background: #151515;
+  color: var(--ink);
+  caret-color: var(--ink);
+  font-family: var(--auth-font-small) !important;
+  font-size: 15px;
+  font-weight: 500 !important;
+  outline: none;
+  transition: border-color var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+
+.auth__field input:focus {
+  border-color: #303030;
+  box-shadow: none;
+}
+
+/* One tap vs. the fields above it, which the user actually reads and types
+   into — the button shouldn't outweigh them. Same width AND height as
+   .auth__field input (was capped at 250px while every field is 100% — a
+   button noticeably narrower than the fields above it reads as misplaced,
+   not "appropriately small"). Text sized against the field labels/values
+   (12-15px), not the 34px h1. */
+.auth__btn {
+  width: 100%;
+  height: 48px;
+  flex-shrink: 0; /* the card is a flex column: it squeezed the CTA below the fields' 48px */
+  align-self: stretch;
+  /* Pulled in to --auth-tight (10px) on request: same spacing as between the
+     two checkboxes, instead of a bigger "different kind of thing" gap. */
+  margin-top: calc(var(--auth-tight) - var(--auth-gap));
+  border: 0;
+  border-radius: 8px;
+  /* Hard 2px bottom edge instead of the old blurred text-shadow (smeared glyphs). */
+  --auth-btn-shadow: 0 7px 17px rgba(0, 0, 0, 0.24), inset 0 -2px 0 rgba(0, 0, 0, 0.16);
+  background: var(--ink);
+  color: var(--bg-base);
+  font-family: var(--auth-font) !important;
+  /* 16px was too small for Fjalla One's narrow caps — glyphs merged into a soft
+     smear. 20px matches the other white CTAs (Library 21px, Save 25px). */
+  font-size: 20px !important;
+  text-transform: none;
+  cursor: pointer;
+  box-shadow: var(--auth-btn-shadow);
+  transition: background var(--t) var(--ease), box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+}
+
+/* Legal documents are long enough to scroll. Keeping the landing mark in
+   that layout leaves only its lightning tail above the document card, which
+   looks like a rendering artifact rather than branding. */
+.auth__panel--legal .auth__logo {
+  display: none;
+}
+
+.auth__panel--legal {
+  height: min(720px, calc(100dvh - 56px));
+}
+
+/* locale-typography.css resets every .auth__btn to `height:auto; line-height:1.25;
+   padding-block:10px`, which silently overrode the 48px above and made the height
+   depend on the font (45px at 20px). Pin it so the CTA matches the fields. */
+.auth .auth__btn {
+  height: 48px;
+  min-height: 48px;
+  padding-block: 0;
+  line-height: 24px;
+}
+
+/* Higher specificity than the ".auth button" reset above (which forces 400
+   on every button in this view) — the CTA earns the one weight exception. */
+.auth button.auth__btn {
+  font-weight: 600 !important;
+}
+
+.auth__btn:not(:disabled):hover {
+  box-shadow: var(--auth-btn-shadow);
+  background: #f1f0ed;
+}
+
+.auth__btn:not(:disabled):active {
+  box-shadow: var(--auth-btn-shadow);
+  background: #e5e4e1;
+}
+
+.auth__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* The two checkboxes + the AI/rights hint below them are one idea — what
+   you're agreeing to — so they get their own tight internal gap instead of
+   the card's normal between-sections gap (22px, same as the gap this group
+   sits in). */
+.auth__terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--auth-tight);
+}
+
+/* Checkboxes: keep the box aligned to the FIRST line so multi-line consent
+   text (terms / age) reads cleanly instead of the box floating mid-paragraph. */
+.auth__check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 19px; /* ≈1.45; 18.85px left the card at a fractional height */
+  color: var(--text-2);
+  cursor: pointer;
+  font-family: var(--auth-font-small);
+  font-weight: 500;
+}
+
+.auth__check input[type="checkbox"] {
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.auth__legal-link {
+  appearance: none;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit !important;
+  line-height: inherit !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.auth__legal-link:hover,
+.auth__legal-link:focus-visible {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.auth__legal-link:focus-visible,
+.auth__link:focus-visible,
+.auth__btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.78);
+  outline-offset: 3px;
+}
+
+.auth__links {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: calc(var(--auth-tight) - var(--auth-gap));
+}
+
+.auth__link {
+  background: none;
+  border: none;
+  /* Same tone as the consent lines (.auth__check) so the links don't outshout them. */
+  color: var(--text-2);
+  font-family: var(--auth-font-small) !important;
+  font-size: 13px;
+  font-weight: 500 !important;
+  font-style: normal;
+  letter-spacing: 0 !important;
+  line-height: 18px !important;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+
+/* `.auth button` above forces Fjalla One / weight 400 with !important at (0,1,1);
+   this needs (0,2,0) to win for the small links. */
+.auth .auth__link {
+  font-family: var(--auth-font-small) !important;
+  font-weight: 500 !important; /* same as the consent lines */
+}
+
+.auth__link:hover {
+  color: var(--ink);
+}
+
+/* Error now carries the one signal color — it's the single most legible
+   place for it, since "something needs attention" is exactly what the accent
+   means. Success stays neutral ink so only one state ever turns red.
+   Scoped under .auth__card so it beats ".auth__card p { color: --ink-dim }".
+   A full tinted border carries the meaning, not a side-stripe accent. */
+.auth__card .auth__error,
+.auth__card .auth__success {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  /* Even line box: 20 + 2×10 padding + 2×1 border = 42px per line. An odd total
+     (41px) shifted the vertically centred auth screen onto a half pixel as soon
+     as an error appeared. */
+  line-height: 20px;
+  color: var(--ink);
+  /* Same face and weight as the consent lines ("I am at least 18 years old"),
+     not Fjalla One, which smears at 13px. Colours stay as they were. */
+  font-family: var(--auth-font-small);
+  font-weight: 500;
+}
+
+/* Reads as a continuation of the field(s) or checkbox block it's validating,
+   not a separate island — overrides .auth__card's uniform 16px flex gap for
+   whatever precedes it (a field on login/verify, the checkbox block on
+   signup). */
+.auth__terms + .auth__error,
+.auth__field + .auth__error {
+  margin-top: calc(var(--auth-tight) - var(--auth-gap));
+}
+
+/* The submit button sits right below the error/success line it's paired
+   with — same tightened rhythm as above it, not the card's default 16px. */
+.auth__error + .auth__btn,
+.auth__success + .auth__btn {
+  margin-top: calc(var(--auth-tight) - var(--auth-gap));
+}
+
+.auth__card--legal {
+  height: 100%;
+  min-height: 0;
+  padding: 34px 44px 26px;
+  gap: 16px;
+}
+
+.auth__legal-document {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  overscroll-behavior: contain;
+  color: var(--ink-dim);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.auth__legal-document h1,
+.auth__legal-document h2,
+.auth__legal-document p {
+  margin: 0 0 14px;
+}
+
+.auth__legal-document h1 {
+  color: var(--ink);
+  font-family: var(--auth-font) !important;
+  font-size: 22px;
+}
+
+.auth__legal-document h2 {
+  color: var(--ink);
+  font-family: var(--auth-font) !important;
+  font-size: 17px;
+}
+
+.auth__legal-back {
+  align-self: flex-start;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.auth__card .auth__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--signal-soft);
+  border-color: var(--signal-soft);
+  color: var(--error);
+}
+
+.auth__card .auth__error svg {
+  flex: 0 0 auto;
+}
+
+.auth__card .auth__success {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Reads as a continuation of the form it confirms, not a separate island —
+   overrides .auth__card's uniform 16px flex gap for whatever precedes it
+   (fields, terms block, or an error line). */
+.auth__error + .auth__success,
+.auth__field + .auth__success,
+.auth__terms + .auth__success {
+  margin-top: calc(var(--auth-tight) - var(--auth-gap));
+}
+
+.auth__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.auth__hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--auth-font-small);
+}
+
+/* `.auth__card p` (locale-typography.css) sets a 1.5 multiplier → 19.5px. */
+.auth__card .auth__hint {
+  line-height: 20px;
+}
+
+@media (max-width: 640px) {
+  .auth {
+    align-items: flex-start;
+    padding: 56px 18px;
+  }
+
+  .auth__logo {
+    width: min(250px, 70vw);
+    height: auto;
+    margin-bottom: 18px;
+  }
+
+  .auth__card {
+    padding: 44px 30px 34px;
+    border-width: 2px;
+    border-radius: 32px;
+  }
+
+  .auth__panel--legal {
+    height: calc(100dvh - 36px);
+  }
+
+  .auth__card--legal {
+    padding: 28px 24px 22px;
+  }
+}

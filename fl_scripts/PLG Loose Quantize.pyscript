@@ -1,0 +1,76 @@
+"""PLG Loose Quantize — loose, swung quantize (not robotic).
+
+Pulls notes toward a grid, then re-introduces groove:
+  * Swing      delays the off-beat 1/16s (classic FL swing feel), independent of
+               the quantize grid so it always swings musically.
+  * Looseness  adds a touch of random timing so it never sounds machine-perfect.
+
+Strength 1.0 + Swing 0 + Looseness 0 = hard quantize. Dial swing/looseness up for
+trap swing / loose pocket.
+"""
+
+from __future__ import annotations
+
+import random
+
+import flpianoroll as flp
+
+GRIDS = ["1/8", "1/16", "1/16 triplet", "1/4"]
+GRID_FACTOR = {"1/8": 0.5, "1/16": 0.25, "1/16 triplet": 1.0 / 6.0, "1/4": 1.0}
+
+
+def createDialog():
+    form = flp.ScriptDialog(
+        "PLG Loose Quantize",
+        "Loose, swung quantize. Strength pulls to grid; swing drags the off-1/16s.",
+    )
+    form.addInputCombo("Grid", GRIDS, 1)
+    form.addInputKnob("Strength", 0.85, 0.0, 1.0)
+    form.addInputKnob("Swing", 0.25, 0.0, 1.0)
+    form.addInputKnob("Looseness", 0.12, 0.0, 1.0)
+    form.addInputCheckbox("Only selected notes", False)
+    return form
+
+
+def _resolve_combo(value, options):
+    return options[value] if isinstance(value, int) else value
+
+
+def _target_indices(only_selected):
+    indices = []
+    for i in range(flp.score.noteCount):
+        note = flp.score.getNote(i)
+        if (not only_selected) or note.selected:
+            indices.append(i)
+    return indices
+
+
+def apply(form):
+    grid = _resolve_combo(form.getInputValue("Grid"), GRIDS)
+    grid_ticks = max(1, int(round(flp.score.PPQ * GRID_FACTOR.get(grid, 0.25))))
+    strength = float(form.getInputValue("Strength"))
+    swing = float(form.getInputValue("Swing"))
+    looseness = float(form.getInputValue("Looseness"))
+    only_selected = bool(form.getInputValue("Only selected notes"))
+
+    targets = _target_indices(only_selected)
+    if not targets:
+        flp.Utils.ShowMessage("PLG Loose Quantize: nothing to quantize.")
+        return
+
+    sixteenth = max(1, int(round(flp.score.PPQ * 0.25)))
+
+    for i in targets:
+        note = flp.score.getNote(i)
+
+        slot = int(round(note.time / grid_ticks))
+        grid_pos = slot * grid_ticks
+        new_time = note.time + strength * (grid_pos - note.time)
+
+        if swing > 0 and int(round(new_time / sixteenth)) % 2 == 1:
+            new_time += swing * sixteenth * 0.5
+
+        if looseness > 0:
+            new_time += (random.random() * 2.0 - 1.0) * looseness * sixteenth * 0.5
+
+        note.time = max(0, int(round(new_time)))

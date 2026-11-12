@@ -1,0 +1,28 @@
+# Optional extras — install only what you need:
+#
+#   pip install -r requirements-optional.txt
+#
+# demucs     ~2 GB + torch — stem splitter (Tools → Split Stems)
+# music21    music theory checks (heavy; experimental)
+# pyflp      read/write .flp via API (may fail on Python 3.12 / FL 2025 files)
+#
+# ML sample picker (optional, ~3 GB with torch — not bundled in .exe):
+#   pip install laion-clap torch torchvision timm
+#   Set PLG_USE_CLAP=1 to enable; PLG_USE_CLAP=0 to force off.
+#
+# Reference reverse (audio → MIDI, Python 3.11 venv at .venv-bp):
+#   py -3.11 -m venv .venv-bp && .venv-bp\\Scripts\\pip install basic-pitch==0.4.0
+#   Drop snippets in PLG_Library/references/ — or prompt with "reference"/"референс".
+#   PLG_USE_BASIC_PITCH=0 to disable; PLG_BASIC_PITCH_PYTHON to override interpreter.
+
+# Beat reward learning (local 👍/👎 ranker for beat_quality):
+#   pip install scikit-learn
+#   PLG_USE_BEAT_REWARD=1  PLG_BEAT_REWARD_WEIGHT=0.35
+#
+# Symbolic ML (Markov hats + bar-8 drop):
+#   PLG_USE_SYMBOLIC=1   (auto when genre profile has markov_hats: rage/opium/phonk/drill/edm)
+
+demucs>=4.0.0
+scikit-learn>=1.4.0
+music21>=9.0.0
+pyflp>=2.2.1

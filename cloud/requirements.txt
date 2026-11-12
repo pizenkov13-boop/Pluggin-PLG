@@ -1,0 +1,26 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+httpx>=0.27.0
+PyJWT>=2.9.0
+python-dotenv>=1.0.0
+supabase>=2.10.0
+pydantic>=2.9.0
+
+# Billing (Phase 2)
+yookassa>=3.0.0
+stripe>=11.0.0
+# Prodamus webhook is application/x-www-form-urlencoded — FastAPI's
+# Request.form() needs this to parse it (cloud/app/providers/prodamus_provider.py).
+python-multipart
+# Geo price routing — reads a local DB-IP Lite country .mmdb on our own server.
+# Pure-Python reader (C ext optional). No runtime network; the visitor IP never
+# leaves the box. See cloud/app/geoip.py and cloud/infra/ru-hosting-runbook.md.
+maxminddb>=2.6.0
+
+# Infra (Phase 4)
+redis>=5.0.0
+sentry-sdk[fastapi]>=2.0.0
+
+# LLM (same as desktop)
+google-genai>=1.0.0
+anthropic>=0.49.0

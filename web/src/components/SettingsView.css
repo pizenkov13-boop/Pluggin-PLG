@@ -1,0 +1,165 @@
+.settings {
+  max-width: 560px;
+}
+
+.settings--loading {
+  color: var(--text-3);
+  padding: 24px 0;
+}
+
+/* Title block = the one major section break on the page (compact-dashboard
+   scale, not the landing's 80px). */
+.settings__head {
+  margin-bottom: var(--space-xl);
+}
+
+/* font-family/size/weight/letter-spacing/case come from locale-typography.css
+   (.settings__head h1 is one of its targeted selectors) — redefining them
+   here silently overrode the locale-aware scale for every non-Latin locale.
+   Only set what that rule doesn't own. */
+.settings__head h1 {
+  margin: 0;
+  color: var(--ink);
+}
+
+.settings__head p {
+  margin: 10px 0 0;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+/* Groups replace the old flat 24px-between-every-card stack: cards in the
+   same group sit close (16px, related fields), groups themselves get real
+   air between them (40px, a topic change) — was one undifferentiated 24px
+   rhythm regardless of whether two cards were part of the same idea. */
+.settings__group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings__group + .settings__group {
+  margin-top: 40px;
+}
+
+.settings__head + .settings__group {
+  margin-top: 0;
+}
+
+.settings__group-label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* Dark-theme card: outline-forward. On a near-black page a fill barely reads,
+   so the border defines the card and margins give it room to breathe. */
+.settings__card {
+  padding: 22px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.012);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settings__collapse-head {
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.settings__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings__field span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.settings__field input,
+.settings__field select {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+}
+
+.settings__field input:focus,
+.settings__field select:focus {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+.settings__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+/* Was --signal-soft + a red-tinted border — Settings is one of the 6 screens
+   under the achromatic rule now, so error state reads through weight/border
+   only, same pattern as page__error elsewhere in the app. */
+.settings__error {
+  margin: 0;
+  border-radius: var(--radius);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  /* Same text treatment as the red error blocks (.auth__error, .hero__error):
+     UI face, weight 500, even 42px box (20 line + 2×10 padding + 2×1 border). */
+  padding: 10px 14px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.settings__save {
+  align-self: flex-start;
+  margin-top: 4px;
+  appearance: none;
+  border: 1px solid var(--ink);
+  padding: 0 22px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--bg-base);
+  cursor: pointer;
+  transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+}
+
+.settings__save:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -12px rgba(255, 255, 255, 0.4), 0 14px 36px -14px rgba(255, 255, 255, 0.25);
+}
+
+.settings__save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
