@@ -14,7 +14,10 @@ note and every sound is a normal channel you can change.
 > I stopped the project in November 2026 after testing it with a working
 > beatmaker. This README covers what I built and how it works.
 
-<!-- Add 2-3 screenshots here: the PLG home screen with the sound browser, and a generated project in FL Studio's Playlist. Put the images in /docs/img and link them. -->
+<img width="957" height="663" alt="PLG home screen" src="https://github.com/user-attachments/assets/bc6d2233-d719-4e95-be5d-a8b8e449a5ed" /> 
+<img width="1068" height="340" alt="Generated project in FL Studio" src="https://github.com/user-attachments/assets/c29ea5c8-5cf6-4ea4-91f2-707345f4a3d7" />
+
+
 
 ---
 
