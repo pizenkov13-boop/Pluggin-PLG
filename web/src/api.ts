@@ -72,8 +72,8 @@ export interface PywebviewApi {
   reveal_path(path: string): Promise<ApiResult>;
   // Re-bake family (chaos_roll / flip_beat / clipper mode / producer
   // blueprint) and beat rating are archived — not on the bridge. Re-bake's
-  // archive folder was deleted 2026-09-23 (IP-hygiene cleanup, see
-  // legal/IMAGE_LINE_IP_QUESTIONS_RU.md §1.4/3.5); history is in Git. See
+  // archive folder was deleted 2026-09-23 (IP-hygiene cleanup);
+  // history is in Git. See
   // archive/rating-2026-08-11/README.md for the rating vertical.
 
   import_kit_folder(source: string, organize?: boolean): Promise<ApiResult & { destination?: string; mode?: string }>;

@@ -24,7 +24,7 @@ PPQ_SWING_MIN = 6 / 96.0   # dirtier swing — +6..+9 ticks @ PPQ 96
 PPQ_SWING_MAX = 9 / 96.0
 #: Hard stop for bass808_llm, the LLM kick/808 placer (see the project issue log (not included) 0au). The code stays, the path is
 #: unreachable: no profile enables it AND this must be True, whatever API key is present. The contract
-#: (ACTIVE_ROUTE.md) is that an LLM never places notes; tests that exercise the branch flip this constant.
+#: is that an LLM never places notes; tests that exercise the branch flip this constant.
 KICK808_LLM_ALLOWED = False
 
 #: Ceiling on GenreProfile.hat_swing as applied. trap and drill ask for 1.28 and
@@ -5448,7 +5448,7 @@ def _vary_repeated_lowend_cycle(data: dict[str, Any], context_audit: dict[str, A
     # this pass could not run at all (its reason never fired), so it never met
     # a ghost; taking one half of a deliberate double would leave the other
     # half sounding like a stray. Read through bass808_gen, never by testing
-    # the raw key — see PROJECT_MAP 4.1.
+    # the raw key.
     from bass808_gen import is_double_member
 
     varied = 0

@@ -1393,7 +1393,7 @@ def _archived_beat_reward_status() -> dict[str, Any]:
 # producing a finished FLP (internal notes (not included)). Their UI lives in
 # `archive/unmounted-ui-2026-08-11/`. Their backend module (`pattern_tools.py`)
 # and its tests lived in `archive/rebake/`, deleted 2026-09-23 as an IP-hygiene
-# cleanup (see `legal/IMAGE_LINE_IP_QUESTIONS_RU.md` §1.4/3.5) — history is in
+# cleanup — history is in
 # Git. Do not restore any of it.
 # ---------------------------------------------------------------------------
 

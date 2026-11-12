@@ -9,7 +9,7 @@ on each kick, smooth bezier recovery to unity by mid-beat) as automation points.
 Those points are stored on the pattern (plg_producer_meta.sidechain) so they feed
 the build guide as an exact, ready-to-draw curve. Authoring them into a *native
 FL volume automation clip* is a separate binary step that must be verified in FL
-(see FL_BRIDGE.md philosophy) — this module deliberately stops at the math.
+— this module deliberately stops at the math.
 """
 
 from __future__ import annotations

@@ -12,7 +12,7 @@ specs* (themes/*.json) with exact hex values, plus this installer which:
   * copies the JSON color specs into ``Themes/PLG/`` so the values are handy
     inside FL's theme editor.
 
-See THEMES.md for how to apply the colors in the IL theme editor.
+Apply the colors in the FL theme editor from the generated JSON specs.
 """
 
 from __future__ import annotations
@@ -75,5 +75,5 @@ if __name__ == "__main__":
     if not result["themes"]:
         print(
             "\nNo .flstheme binaries found — that's expected. Open FL's theme "
-            "editor and apply the hex values from THEMES.md / Themes/PLG/*.json."
+            "editor and apply the hex values from the generated JSON specs."
         )

@@ -3,7 +3,7 @@
 OPEN IN FL writes a real ``.flp`` session (the seven lanes + the pattern notes)
 and hands it to FL on the command line. Opening a project file is the one FL
 import path that is actually reliable — no menu automation, no drag, no MIDI
-import dialog. See FL_BRIDGE.md for the full rationale.
+import dialog.
 """
 
 from __future__ import annotations

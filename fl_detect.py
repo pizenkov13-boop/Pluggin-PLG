@@ -15,7 +15,7 @@ USER_PROFILE_FILE = app_dir() / "user_profile.json"
 # Conservative .flp header tag. This is an INTENT, not a verified range: the
 # file body carries blobs captured from FL 2025, and nothing in tests/ has ever
 # opened a PLG project in FL 12/20/21/22/23/24. Only 25.2.2 is verified.
-# See FL_VERSIONS.md.
+# Only the FL Studio versions listed here are supported.
 FLP_HEADER_VERSION = "21.0.0.0"
 
 _EXE_NAMES = ("FL64.exe", "FL.exe")

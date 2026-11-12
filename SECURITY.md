@@ -9,7 +9,7 @@ operational step you must do before each release.
 > - `scripts/sign_release.py` (the signing tool) **is not in `C:\newPLUG`** —
 >   there is no `scripts/` folder here at all.
 > - `plg_updater.py` (the client that verifies signatures) was **moved to
->   `archive/updater-2026-08-11/` by product decision** (the project issue log (not included) §2).
+>   `archive/updater-2026-08-11/` by product decision**.
 >   It is not imported by the desktop app. `PLG_UPDATE_PUBKEY` remains in
 >   `.env.release:24` but nothing reads it.
 >

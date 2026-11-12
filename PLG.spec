@@ -72,7 +72,7 @@ for path in sorted(bundled_dir.iterdir()):
 
 # NOTE (2026-08-27 DD): assets/flex/*.bin are deliberately NOT bundled.
 # They are captured FLEX plugin-state bytes of unreproducible provenance
-# (FLP_PROVENANCE.md, the project issue log (not included) §0ag). Without them the export path
+# (see the export notes). Without them the export path
 # degrades on its own: _flex_blob_paths() -> None, melody channel exports
 # through the existing Sampler path (starter/user melody wav); the stamped
 # FLEX picks are ignored at build time. The files stay in dev checkouts.

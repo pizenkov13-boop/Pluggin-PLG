@@ -197,7 +197,6 @@ def format_build_guide(data: dict[str, Any]) -> str:
     lines.extend([
         "",
         workflow,
-        "FL: Piano roll -> Scripts -> PLG (Hat Roll, 808 Glide, Pan Spread)",
-        "Full guide: FL_WORKFLOWS.md",
+        "FL: Piano roll -> Scripts -> PLG (Hat Roll, 808 Glide, Pan Spread)",
     ])
     return "\n".join(lines)

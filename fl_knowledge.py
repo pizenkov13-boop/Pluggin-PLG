@@ -63,7 +63,7 @@ def load_workflows_reference() -> str:
         return ""
     text = WORKFLOWS_FILE.read_text(encoding="utf-8").strip()
     if len(text) > MAX_WORKFLOW_CHARS:
-        return text[:MAX_WORKFLOW_CHARS] + "\n\n...(see FL_WORKFLOWS.md in project)"
+        return text[:MAX_WORKFLOW_CHARS] + "\n\n...(truncated)"
     return text
 
 

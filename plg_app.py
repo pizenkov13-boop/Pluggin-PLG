@@ -755,8 +755,8 @@ class PlgApp(tk.Tk):
                 "PLG Themes",
                 f"Installed {len(specs)} color spec(s) to FL Themes/PLG/\n"
                 f"Installed {len(themes)} .flstheme file(s).\n\n"
-                "Open FL → theme editor → apply hex values from THEMES.md\n"
-                "or the JSON files in your FL Themes/PLG folder.",
+                "Open FL → theme editor → apply hex values from\n"
+                " the JSON files in your FL Themes/PLG folder.",
             )
         except OSError as exc:
             messagebox.showerror("PLG", str(exc))

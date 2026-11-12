@@ -191,7 +191,4 @@ with. That is nominative use of someone else's mark, so it has to be stated:
 * PLG does not embed, bundle, or redistribute FL Studio. The user needs their
   own licensed copy of FL Studio to open the `.flp` files PLG produces.
 
-The same notice ships in the website footer on every page that names FL Studio
-(`landing/*.html`, `.footer-trademark`). Copyright questions about the `.flp`
-byte structures are a separate matter, tracked in `FLP_PROVENANCE.md` and
-`legal/IMAGE_LINE_IP_QUESTIONS_RU.md` - this section is about the mark only.
+This section is about the mark only.
